@@ -60,8 +60,9 @@ def pytest_runtest_makereport(item, call):
 def logged_in_driver(driver):
     """A browser already logged in as the standard user, sitting on the products page."""
     from pages.login_page import LoginPage
+    from utils import test_data as data
 
     login_page = LoginPage(driver)
     login_page.load()
-    login_page.login("standard_user", "secret_sauce")
+    login_page.login(data.STANDARD_USER, data.PASSWORD)
     return driver

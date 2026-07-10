@@ -5,7 +5,8 @@ base URL lives in one place.
 """
 import requests
 
-BASE_URL = "https://jsonplaceholder.typicode.com"
+from utils.test_data import API_BASE_URL as BASE_URL
+
 TIMEOUT = 10
 
 

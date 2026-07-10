@@ -1,10 +1,11 @@
 """LoginPage - page object for the saucedemo.com login screen."""
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
+from utils.test_data import BASE_URL
 
 
 class LoginPage(BasePage):
-    URL = "https://www.saucedemo.com"
+    URL = BASE_URL
 
     USERNAME_INPUT = (By.ID, "user-name")
     PASSWORD_INPUT = (By.ID, "password")
