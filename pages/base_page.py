@@ -21,10 +21,48 @@ class BasePage:
     def click(self, locator):
         self.wait.until(EC.element_to_be_clickable(locator)).click()
 
-    def type_text(self, locator, text):
-        field = self.find(locator)
-        field.clear()
-        field.send_keys(text)
+    def type_text(self, locator, text, timeout=15):
+        """Type into a field and confirm the value actually registered.
+
+        React controlled inputs can drop keystrokes sent before hydration
+        completes (same root cause as swallowed clicks), so re-type until
+        the field really holds the expected text.
+        """
+        react_set_value = """
+            const field = arguments[0], value = arguments[1];
+            const setter = Object.getOwnPropertyDescriptor(
+                window.HTMLInputElement.prototype, 'value').set;
+            setter.call(field, value);
+            field.dispatchEvent(new Event('input', { bubbles: true }));
+        """
+        self.find(locator)
+        self.driver.implicitly_wait(0)
+        attempt = {"count": 0}
+        try:
+            def _typed_and_confirmed(driver):
+                fields = driver.find_elements(*locator)
+                if not fields:
+                    return False
+                field = fields[0]
+                try:
+                    if field.get_attribute("value") == text:
+                        return True
+                    # Native keystrokes first; if React resets the field
+                    # (controlled input whose onChange was not wired up in
+                    # time), fall back to React's own value setter.
+                    if attempt["count"] % 2 == 0:
+                        field.clear()
+                        field.send_keys(text)
+                    else:
+                        driver.execute_script(react_set_value, field, text)
+                    attempt["count"] += 1
+                    return field.get_attribute("value") == text
+                except Exception:
+                    return False
+
+            WebDriverWait(self.driver, timeout).until(_typed_and_confirmed)
+        finally:
+            self.driver.implicitly_wait(5)
 
     def get_text(self, locator):
         return self.find(locator).text
