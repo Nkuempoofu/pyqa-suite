@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Nightly regression run at 02:00 South Africa time (00:00 UTC)
+    - cron: "0 0 * * *"
 
 permissions:
   contents: write
@@ -39,6 +42,24 @@ jobs:
       - name: Install Allure CLI
         if: always()
         run: npm install -g allure-commandline
+
+      - name: Load report history from previous runs
+        uses: actions/checkout@v4
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-history
+
+      - name: Restore Allure history for trend charts
+        if: always()
+        run: |
+          if [ -d gh-pages-history/report/history ]; then
+            cp -r gh-pages-history/report/history reports/allure-results/history
+            echo "History restored from previous run"
+          else
+            echo "No previous history found - starting fresh"
+          fi
 
       - name: Add executor info for the report
         if: always()

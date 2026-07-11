@@ -486,6 +486,12 @@ GRAPHS_TEMPLATE = """<!DOCTYPE html>
       <div class="chart-box"><canvas id="severityChart"></canvas></div>
     </div>
 
+    <div class="chart-panel full" id="trendPanel" style="display:none;">
+      <div class="chart-title">Pass-rate trend</div>
+      <div class="chart-sub">Quality tracked across CI runs - every push and nightly run adds a point</div>
+      <div class="chart-box"><canvas id="trendChart"></canvas></div>
+    </div>
+
     <div class="chart-panel full">
       <div class="chart-title">Slowest tests</div>
       <div class="chart-sub">Top 10 by execution time - automation candidates for optimisation</div>
@@ -591,6 +597,45 @@ new Chart(document.getElementById('severityChart'), {
   }
 });
 
+// ── Pass-rate trend across runs ──
+if (DATA.history && DATA.history.length > 1) {
+  document.getElementById('trendPanel').style.display = '';
+  const hist = DATA.history;
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: hist.map(h => 'Run #' + h.run),
+      datasets: [
+        {
+          label: 'pass rate %',
+          data: hist.map(h => h.passRate),
+          borderColor: C.cyanL, backgroundColor: 'rgba(34,211,238,0.12)',
+          fill: true, tension: 0.35, borderWidth: 2.5,
+          pointBackgroundColor: hist.map(h => h.passRate === 100 ? C.pass : C.warn),
+          pointBorderColor: '#0f172a', pointRadius: 5, pointHoverRadius: 7,
+          yAxisID: 'y',
+        },
+        {
+          label: 'total tests',
+          data: hist.map(h => h.total),
+          borderColor: C.violet, borderDash: [6, 5], borderWidth: 1.5,
+          pointRadius: 3, pointBackgroundColor: C.violet, fill: false, tension: 0.3,
+          yAxisID: 'y1',
+        },
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        y: { min: 0, max: 100, title: { display: true, text: 'pass rate %', color: C.muted }, grid: { color: C.faint } },
+        y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'tests', color: C.muted }, grid: { display: false } },
+        x: { grid: { display: false } }
+      },
+      plugins: { legend: { position: 'top', align: 'end' } }
+    }
+  });
+}
+
 // ── Slowest tests ──
 const slow = [...DATA.tests].sort((a, b) => b.duration - a.duration).slice(0, 10).reverse();
 new Chart(document.getElementById('slowChart'), {
@@ -666,6 +711,21 @@ def build_graphs(report_dir, output_dir):
         if t["status"] != "skipped":
             severities[t["severity"]] = severities.get(t["severity"], 0) + 1
 
+    history_raw = load_widget(report_dir, "history-trend.json") or []
+    history = []
+    for item in reversed(history_raw):
+        d = item.get("data") or item.get("statistic") or {}
+        h_total = d.get("total", 0)
+        h_skipped = d.get("skipped", 0)
+        h_run = h_total - h_skipped
+        if h_run <= 0:
+            continue
+        history.append({
+            "run": item.get("buildOrder") or len(history) + 1,
+            "passRate": round(d.get("passed", 0) / h_run * 100),
+            "total": h_run,
+        })
+
     data = {
         "stats": {
             "passed": stats.get("passed", 0),
@@ -674,6 +734,7 @@ def build_graphs(report_dir, output_dir):
             "skipped": stats.get("skipped", 0),
         },
         "severities": severities,
+        "history": history,
         "tests": [
             {k: t[k] for k in ("name", "status", "start", "stop", "duration")}
             for t in tests if t["status"] != "skipped"
@@ -692,11 +753,32 @@ def build_graphs(report_dir, output_dir):
     print(f"graphs.html written ({len(data['tests'])} tests charted)")
 
 
+def build_badge(report_dir, output_dir):
+    """Write a shields.io endpoint JSON so the README badge shows live results."""
+    summary = load_widget(report_dir, "summary.json") or {}
+    stats = summary.get("statistic", {})
+    total = stats.get("total", 0)
+    skipped = stats.get("skipped", 0)
+    executed = total - skipped
+    passed = stats.get("passed", 0)
+    failed = stats.get("failed", 0) + stats.get("broken", 0)
+    badge = {
+        "schemaVersion": 1,
+        "label": "tests",
+        "message": f"{passed}/{executed} passing" if executed else "no runs yet",
+        "color": "brightgreen" if failed == 0 and executed else "red",
+    }
+    out = Path(output_dir) / "badge.json"
+    out.write_text(json.dumps(badge), encoding="utf-8")
+    print(f"badge.json written ({badge['message']})")
+
+
 def main():
     report_dir = sys.argv[1] if len(sys.argv) > 1 else "allure-report/report"
     output_dir = sys.argv[2] if len(sys.argv) > 2 else "allure-report"
     build_index(report_dir, output_dir)
     build_graphs(report_dir, output_dir)
+    build_badge(report_dir, output_dir)
 
 
 if __name__ == "__main__":

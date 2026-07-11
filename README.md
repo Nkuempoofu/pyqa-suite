@@ -1,13 +1,17 @@
 # PyQA Suite - Automated Web Testing Framework
 
 [![Test Suite](https://github.com/Nkuempoofu/pyqa-suite/actions/workflows/tests.yml/badge.svg)](https://github.com/Nkuempoofu/pyqa-suite/actions/workflows/tests.yml)
+[![Tests](https://img.shields.io/endpoint?url=https%3A%2F%2Fnkuempoofu.github.io%2Fpyqa-suite%2Fbadge.json)](https://nkuempoofu.github.io/pyqa-suite/)
+[![Python](https://img.shields.io/badge/python-3.12%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Live Dashboard](https://img.shields.io/badge/live-dashboard-06b6d4)](https://nkuempoofu.github.io/pyqa-suite/)
+[![Nightly](https://img.shields.io/badge/nightly-02%3A00%20SAST-8b5cf6)](https://github.com/Nkuempoofu/pyqa-suite/actions)
 
-A Python + Selenium WebDriver test automation framework built with the Page Object Model design pattern, targeting the [Sauce Demo](https://www.saucedemo.com) e-commerce application.
+A Python + Selenium WebDriver test automation framework built with the Page Object Model design pattern, targeting the [Sauce Demo](https://www.saucedemo.com) e-commerce application. Runs on every push **and nightly at 02:00 SAST**, publishing live results.
 
 **Author:** Nkululeko Mpofu | QA Engineer
 [LinkedIn](https://www.linkedin.com/in/nkululeko-mpofu) | [Portfolio](https://nkululeko-portfolio.vercel.app)
 
-**Live Allure report:** [nkuempoofu.github.io/pyqa-suite](https://nkuempoofu.github.io/pyqa-suite/)
+**Live dashboard:** [nkuempoofu.github.io/pyqa-suite](https://nkuempoofu.github.io/pyqa-suite/) &middot; **Analytics:** [graphs](https://nkuempoofu.github.io/pyqa-suite/graphs.html) &middot; **Test strategy:** [TEST_STRATEGY.md](TEST_STRATEGY.md)
 
 ## Tech Stack
 
