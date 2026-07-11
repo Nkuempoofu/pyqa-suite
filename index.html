@@ -6,7 +6,7 @@
 <title>PyQA Suite | Live Test Automation Dashboard | Nkululeko Mpofu</title>
 <meta name="description" content="Live CI test results for PyQA Suite - a Python + Selenium WebDriver automation framework by Nkululeko Mpofu, QA Engineer. Updated automatically on every push.">
 <meta property="og:title" content="PyQA Suite | Live Test Automation Dashboard">
-<meta property="og:description" content="21 automated tests, 100% passing. Python, Selenium WebDriver, pytest, Allure, GitHub Actions.">
+<meta property="og:description" content="52 automated tests, 100% passing. Python, Selenium WebDriver, pytest, Allure, GitHub Actions.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#129514;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -193,13 +193,14 @@
     <div class="chips">
       <span class="chip">Python</span><span class="chip">Selenium WebDriver</span>
       <span class="chip">pytest</span><span class="chip">Page Object Model</span>
-      <span class="chip">REST API Testing</span><span class="chip">Allure</span>
-      <span class="chip">GitHub Actions</span>
+      <span class="chip">Cross-browser: Chrome + Firefox</span>
+      <span class="chip">REST API Testing</span><span class="chip">Accessibility (axe-core)</span>
+      <span class="chip">Allure</span><span class="chip">GitHub Actions</span>
     </div>
     <div class="status-row">
-      <span class="status ok"><span class="dot"></span>ALL 21 TESTS PASSING</span>
-      <a class="run-chip" href="https://github.com/Nkuempoofu/pyqa-suite/actions/runs/29166542688" target="_blank" rel="noopener">Run #8 &middot; view build &#8599;</a>
-      <span class="run-chip" style="pointer-events:none;">Duration &middot; 1m 16s</span>
+      <span class="status ok"><span class="dot"></span>ALL 52 TESTS PASSING</span>
+      <a class="run-chip" href="https://github.com/Nkuempoofu/pyqa-suite/actions/runs/29167413662" target="_blank" rel="noopener">Run #9 &middot; view build &#8599;</a>
+      <span class="run-chip" style="pointer-events:none;">Duration &middot; 2m 5s</span>
     </div>
   </header>
 
@@ -208,8 +209,8 @@
       <div class="label">Pass rate</div>
       <div class="ring"><div class="ring-inner">100%</div></div>
     </div>
-    <div class="card"><div class="label">Test cases</div><div class="value">21</div><div class="hint">UI + API, executed this run</div></div>
-    <div class="card"><div class="label">Passed</div><div class="value pass">21</div><div class="hint">verified this run</div></div>
+    <div class="card"><div class="label">Test cases</div><div class="value">52</div><div class="hint">UI + API, executed this run</div></div>
+    <div class="card"><div class="label">Passed</div><div class="value pass">52</div><div class="hint">verified this run</div></div>
     <div class="card"><div class="label">Failures</div><div class="value fail">0</div><div class="hint">including broken</div></div>
   </div>
 
@@ -234,6 +235,12 @@
           <div class="feat-count">6/6</div>
         </div>
         <div class="feat-row">
+          <div class="feat-icon">&#128722;</div>
+          <div class="feat-name">Product Catalogue</div>
+          <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
+          <div class="feat-count">4/4</div>
+        </div>
+        <div class="feat-row">
           <div class="feat-icon">&#128179;</div>
           <div class="feat-name">Checkout</div>
           <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
@@ -242,12 +249,6 @@
         <div class="feat-row">
           <div class="feat-icon">&#128273;</div>
           <div class="feat-name">Authentication</div>
-          <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
-          <div class="feat-count">3/3</div>
-        </div>
-        <div class="feat-row">
-          <div class="feat-icon">&#128722;</div>
-          <div class="feat-name">Product Catalogue</div>
           <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
           <div class="feat-count">3/3</div>
         </div>
@@ -264,10 +265,9 @@
     <h2>Run details</h2>
     <div class="two-col">
       <div class="panel">
-          <div class="env-row"><span class="env-key">Python</span><span class="env-val">3.12.13</span></div>
-          <div class="env-row"><span class="env-key">Selenium</span><span class="env-val">4.45.0</span></div>
-          <div class="env-row"><span class="env-key">OS</span><span class="env-val">Linux 6.17.0-1018-azure</span></div>
-          <div class="env-row"><span class="env-key">Browser</span><span class="env-val">Chrome (headless in CI)</span></div>
+          <div class="env-row"><span class="env-key">Python</span><span class="env-val">3.12</span></div>
+          <div class="env-row"><span class="env-key">Browsers</span><span class="env-val">Chrome + Firefox (matrix)</span></div>
+          <div class="env-row"><span class="env-key">OS</span><span class="env-val">Ubuntu (GitHub Actions)</span></div>
           <div class="env-row"><span class="env-key">Target Site</span><span class="env-val">https://www.saucedemo.com</span></div>
           <div class="env-row"><span class="env-key">API Under Test</span><span class="env-val">https://jsonplaceholder.typicode.com</span></div>
       </div>
@@ -292,7 +292,7 @@
 
   <footer>
     <span>&copy; 2026 Nkululeko Mpofu &middot; QA Engineer</span>
-    <span>Generated 11 Jul 2026 &middot; 20:11 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
+    <span>Generated 11 Jul 2026 &middot; 20:41 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
   </footer>
 </div>
 </body>
