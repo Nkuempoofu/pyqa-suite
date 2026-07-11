@@ -57,9 +57,13 @@ jobs:
 
       - name: Build Allure report
         if: always()
-        run: allure generate reports/allure-results -o allure-report --clean --name "PyQA Suite - Test Report"
+        run: allure generate reports/allure-results -o allure-report/report --clean --name "PyQA Suite - Test Report"
 
-      - name: Publish Allure report to GitHub Pages
+      - name: Build branded dashboard
+        if: always()
+        run: python scripts/build_dashboard.py allure-report/report allure-report
+
+      - name: Publish dashboard and report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: always()
         with:

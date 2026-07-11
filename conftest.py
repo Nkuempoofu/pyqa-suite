@@ -47,6 +47,7 @@ def driver(driver_path):
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
+    options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
     # CI servers have no display, so run headless there.
     # Set HEADLESS=1 locally to do the same on your own machine.
     if os.environ.get("CI") or os.environ.get("HEADLESS"):
