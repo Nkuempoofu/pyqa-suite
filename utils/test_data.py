@@ -11,6 +11,8 @@ API_BASE_URL = "https://jsonplaceholder.typicode.com"
 # saucedemo.com publishes these demo credentials on its login page
 STANDARD_USER = "standard_user"
 LOCKED_OUT_USER = "locked_out_user"
+PROBLEM_USER = "problem_user"              # ships with intentional UI defects
+PERFORMANCE_GLITCH_USER = "performance_glitch_user"  # intentionally slow
 PASSWORD = "secret_sauce"
 WRONG_PASSWORD = "wrong_password"
 
@@ -27,5 +29,6 @@ POSTAL_CODE = "0001"
 # Expected messages
 ERROR_BAD_CREDENTIALS = "Username and password do not match"
 ERROR_LOCKED_OUT = "locked out"
+ERROR_USERNAME_REQUIRED = "Username is required"
 ERROR_FIRST_NAME_REQUIRED = "First Name is required"
 ORDER_CONFIRMATION = "Thank you for your order"

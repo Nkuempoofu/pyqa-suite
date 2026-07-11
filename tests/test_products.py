@@ -62,3 +62,35 @@ class TestProducts:
         products.remove_product_from_cart(data.BACKPACK)
 
         assert products.get_cart_count() == 0
+
+
+@allure.feature("Product Catalogue")
+@pytest.mark.ui
+class TestKnownDefects:
+    """saucedemo intentionally ships defective user accounts. These tests
+    document the known defects by asserting they are present - if the
+    vendor ever fixes one, the test fails and tells us the app changed."""
+
+    @allure.story("Known defect - problem_user")
+    @allure.severity(allure.severity_level.MINOR)
+    @pytest.mark.regression
+    def test_problem_user_has_broken_sorting_defect(self, driver):
+        """DEFECT (documented): sorting Z-A does nothing for problem_user.
+
+        Expected for a healthy user: names in reverse alphabetical order.
+        Actual for problem_user: order unchanged. This test asserts the
+        defect is still present, demonstrating defect isolation per user type.
+        """
+        from pages.login_page import LoginPage
+        login_page = LoginPage(driver)
+        login_page.load()
+        login_page.login(data.PROBLEM_USER, data.PASSWORD)
+
+        products = ProductsPage(driver)
+        products.sort_by("za")
+        names = products.get_product_names()
+
+        assert names != sorted(names, reverse=True), (
+            "problem_user sorting defect appears to be FIXED - "
+            "saucedemo has changed; review and update this documented defect"
+        )

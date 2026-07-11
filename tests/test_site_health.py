@@ -117,3 +117,77 @@ class TestSiteHealth:
             if entry.get("level") == "SEVERE" and "favicon" not in entry.get("message", "")
         ]
         assert not severe, "SEVERE console errors:\n" + "\n".join(severe[:5])
+
+
+@pytest.fixture(scope="module")
+def axe_source():
+    """Download the axe-core accessibility engine once per session."""
+    resp = requests.get(
+        "https://cdn.jsdelivr.net/npm/axe-core@4.10.2/axe.min.js",
+        headers=HEADERS, timeout=TIMEOUT,
+    )
+    resp.raise_for_status()
+    return resp.text
+
+
+def run_axe(driver, axe_source):
+    """Inject axe-core into the current page and return its violation list."""
+    driver.execute_script(axe_source)
+    return driver.execute_async_script(
+        """
+        const done = arguments[arguments.length - 1];
+        axe.run(document, { resultTypes: ['violations'] })
+           .then(r => done(r.violations))
+           .catch(e => done([{ id: 'axe-error', impact: 'critical',
+                               description: String(e), nodes: [] }]));
+        """
+    )
+
+
+@allure.feature("Site Health")
+class TestAccessibility:
+    """WCAG accessibility checks powered by the axe-core engine -
+    the same engine behind Lighthouse and browser a11y devtools."""
+
+    @allure.story("Accessibility")
+    @allure.severity(allure.severity_level.CRITICAL)
+    def test_no_critical_accessibility_violations(self, driver, axe_source):
+        """The page has no CRITICAL WCAG violations (axe-core audit)."""
+        import json as _json
+        driver.get(TARGET_URL)
+        violations = run_axe(driver, axe_source)
+
+        allure.attach(
+            _json.dumps(violations, indent=2),
+            name="axe-full-results",
+            attachment_type=allure.attachment_type.JSON,
+        )
+
+        critical = [v for v in violations if v.get("impact") == "critical"]
+        summary = [
+            f"{v['id']} ({len(v.get('nodes', []))} elements): {v.get('description', '')}"
+            for v in critical
+        ]
+        assert not critical, (
+            f"{len(critical)} critical WCAG violations:\n" + "\n".join(summary)
+        )
+
+    @allure.story("Accessibility")
+    @allure.severity(allure.severity_level.NORMAL)
+    def test_accessibility_violation_summary(self, driver, axe_source):
+        """Report all WCAG violations by impact; fail only if serious ones exceed 5."""
+        driver.get(TARGET_URL)
+        violations = run_axe(driver, axe_source)
+
+        by_impact = {}
+        for v in violations:
+            by_impact.setdefault(v.get("impact", "unknown"), []).append(v["id"])
+
+        report = "\n".join(f"{impact}: {len(ids)} - {', '.join(ids)}" for impact, ids in by_impact.items())
+        allure.attach(report or "No violations found",
+                      name="a11y-summary", attachment_type=allure.attachment_type.TEXT)
+
+        serious = by_impact.get("serious", [])
+        assert len(serious) <= 5, (
+            f"{len(serious)} serious WCAG violations (threshold 5):\n{report}"
+        )

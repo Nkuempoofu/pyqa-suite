@@ -1,20 +1,20 @@
 """Shared pytest fixtures for the PyQA Suite framework.
 
-The `driver` fixture gives every test a fresh Chrome browser
-and closes it automatically when the test finishes. On failure,
-a screenshot is attached to the Allure report automatically.
+The `driver` fixture gives every test a fresh browser (Chrome by
+default, Firefox via BROWSER=firefox) and closes it automatically
+when the test finishes. On failure, a screenshot is attached to
+the Allure report automatically.
 """
 import os
 import platform
-import sys
 
 import allure
 import pytest
 import selenium
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+
+BROWSER = os.environ.get("BROWSER", "chrome").lower()
+HEADLESS = bool(os.environ.get("CI") or os.environ.get("HEADLESS"))
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -27,7 +27,7 @@ def allure_environment(request):
             f"Python={platform.python_version()}",
             f"Selenium={selenium.__version__}",
             f"OS={platform.system()} {platform.release()}",
-            "Browser=Chrome (headless in CI)",
+            f"Browser={BROWSER.capitalize()}{' (headless)' if HEADLESS else ''}",
             "Target.Site=https://www.saucedemo.com",
             "API.Under.Test=https://jsonplaceholder.typicode.com",
         ]
@@ -38,25 +38,46 @@ def allure_environment(request):
 
 @pytest.fixture(scope="session")
 def driver_path():
-    """Download/locate chromedriver once for the whole test session."""
+    """Download/locate the matching webdriver once for the whole session."""
+    if BROWSER == "firefox":
+        from webdriver_manager.firefox import GeckoDriverManager
+        return GeckoDriverManager().install()
+    from webdriver_manager.chrome import ChromeDriverManager
     return ChromeDriverManager().install()
 
 
-@pytest.fixture
-def driver(driver_path):
+def _chrome(driver_path):
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.chrome.service import Service
+
     options = Options()
     options.add_argument("--start-maximized")
     options.add_argument("--disable-notifications")
     options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
-    # CI servers have no display, so run headless there.
-    # Set HEADLESS=1 locally to do the same on your own machine.
-    if os.environ.get("CI") or os.environ.get("HEADLESS"):
+    if HEADLESS:
         options.add_argument("--headless=new")
         options.add_argument("--window-size=1920,1080")
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
+    return webdriver.Chrome(service=Service(driver_path), options=options)
 
-    driver = webdriver.Chrome(service=Service(driver_path), options=options)
+
+def _firefox(driver_path):
+    from selenium.webdriver.firefox.options import Options
+    from selenium.webdriver.firefox.service import Service
+
+    options = Options()
+    if HEADLESS:
+        options.add_argument("-headless")
+    options.set_preference("dom.webnotifications.enabled", False)
+    driver = webdriver.Firefox(service=Service(driver_path), options=options)
+    driver.set_window_size(1920, 1080)
+    return driver
+
+
+@pytest.fixture
+def driver(driver_path):
+    driver = _firefox(driver_path) if BROWSER == "firefox" else _chrome(driver_path)
     driver.implicitly_wait(5)
 
     yield driver

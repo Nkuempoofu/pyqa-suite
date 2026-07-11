@@ -15,7 +15,12 @@ permissions:
 
 jobs:
   test:
+    name: test (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
 
     steps:
       - name: Check out the repository
@@ -29,40 +34,69 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run the test suite (headless Chrome)
+      - name: Run the test suite (headless ${{ matrix.browser }})
+        env:
+          BROWSER: ${{ matrix.browser }}
         run: pytest -m "not health"
+
+      - name: Tag results with browser
+        if: always()
+        run: python scripts/tag_browser.py reports/allure-results ${{ matrix.browser }}
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-report
+          name: html-report-${{ matrix.browser }}
           path: reports/report.html
 
-      - name: Install Allure CLI
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
         if: always()
-        run: npm install -g allure-commandline
+        with:
+          name: allure-results-${{ matrix.browser }}
+          path: reports/allure-results
 
-      - name: Load report history from previous runs
+  report:
+    name: publish report
+    runs-on: ubuntu-latest
+    needs: test
+    if: always() && github.event_name != 'pull_request'
+
+    steps:
+      - name: Check out the repository
         uses: actions/checkout@v4
-        if: always()
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download Chrome results
+        uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          ref: gh-pages
-          path: gh-pages-history
+          name: allure-results-chrome
+          path: reports/allure-results
 
-      - name: Restore Allure history for trend charts
-        if: always()
+      - name: Download Firefox results
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: allure-results-firefox
+          path: reports/allure-results
+
+      - name: Write combined environment info
         run: |
-          if [ -d gh-pages-history/report/history ]; then
-            cp -r gh-pages-history/report/history reports/allure-results/history
-            echo "History restored from previous run"
-          else
-            echo "No previous history found - starting fresh"
-          fi
+          cat > reports/allure-results/environment.properties << EOF
+          Python=3.12
+          Browsers=Chrome + Firefox (matrix)
+          OS=Ubuntu (GitHub Actions)
+          Target.Site=https://www.saucedemo.com
+          API.Under.Test=https://jsonplaceholder.typicode.com
+          EOF
 
       - name: Add executor info for the report
-        if: always()
         run: |
           cat > reports/allure-results/executor.json << EOF
           {
@@ -76,17 +110,33 @@ jobs:
           }
           EOF
 
+      - name: Install Allure CLI
+        run: npm install -g allure-commandline
+
+      - name: Load report history from previous runs
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages-history
+
+      - name: Restore Allure history for trend charts
+        run: |
+          if [ -d gh-pages-history/report/history ]; then
+            cp -r gh-pages-history/report/history reports/allure-results/history
+            echo "History restored from previous run"
+          else
+            echo "No previous history found - starting fresh"
+          fi
+
       - name: Build Allure report
-        if: always()
         run: allure generate reports/allure-results -o allure-report/report --clean --name "PyQA Suite - Test Report"
 
       - name: Build branded dashboard
-        if: always()
         run: python scripts/build_dashboard.py allure-report/report allure-report
 
       - name: Publish dashboard and report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
-        if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages

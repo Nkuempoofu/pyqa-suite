@@ -16,12 +16,13 @@ A Python + Selenium WebDriver test automation framework built with the Page Obje
 ## Tech Stack
 
 - **Python 3.14** - core language
-- **Selenium WebDriver 4** - browser automation
-- **pytest** - test runner, fixtures, and markers
+- **Selenium WebDriver 4** - browser automation, **Chrome + Firefox** cross-browser matrix
+- **pytest** - test runner, fixtures, markers, and data-driven parametrisation
 - **Page Object Model (POM)** - maintainable test architecture
 - **requests** - REST API testing
+- **axe-core** - WCAG accessibility audits in the site health suite
 - **Allure + pytest-html** - test reporting with screenshots on failure
-- **GitHub Actions** - CI pipeline running the suite on every push
+- **GitHub Actions** - CI matrix on every push + nightly at 02:00 SAST
 
 ## Project Structure
 
@@ -75,15 +76,17 @@ $env:HEADLESS="1"; pytest  # Windows PowerShell
 
 ## Test Coverage
 
-21 automated test cases across 5 suites:
+26 automated test cases per browser (52 across the Chrome + Firefox matrix), plus 9 on-demand site health checks:
 
 | Suite | Scenarios | Markers |
 |-------|-----------|---------|
-| Login | Valid credentials, invalid password, locked-out user | ui, smoke, regression |
+| Login (data-driven) | 3 valid user types, 3 invalid credential combos, locked-out user | ui, smoke, regression |
 | Products | Inventory display, price sorting, name sorting, cart badge add/remove | ui, smoke, regression |
+| Known defects | problem_user sorting defect documented and asserted per user type | ui, regression |
 | Cart | Added items appear, continue shopping navigation, empty by default | ui, regression |
 | Checkout | Full end-to-end purchase, required field validation, tax calculation | ui, smoke, regression |
 | API | GET/POST/PUT/DELETE, response schema, 404 handling, response time | api, smoke, regression |
+| Site health (any URL) | Availability, HTTPS, speed, viewport, broken links, console errors, WCAG accessibility via axe-core | health |
 
 ## Reports
 

@@ -342,8 +342,9 @@ def build_index(report_dir, output_dir):
     <div class="chips">
       <span class="chip">Python</span><span class="chip">Selenium WebDriver</span>
       <span class="chip">pytest</span><span class="chip">Page Object Model</span>
-      <span class="chip">REST API Testing</span><span class="chip">Allure</span>
-      <span class="chip">GitHub Actions</span>{skip_note}
+      <span class="chip">Cross-browser: Chrome + Firefox</span>
+      <span class="chip">REST API Testing</span><span class="chip">Accessibility (axe-core)</span>
+      <span class="chip">Allure</span><span class="chip">GitHub Actions</span>{skip_note}
     </div>
     <div class="status-row">
       <span class="status {status_class}"><span class="dot"></span>{status_word}</span>
@@ -444,7 +445,7 @@ GRAPHS_TEMPLATE = """<!DOCTYPE html>
   .chart-title { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
   .chart-sub { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
   .chart-box { position: relative; height: 300px; }
-  .chart-box.tall { height: 560px; }
+  .chart-box.tall { height: 860px; }
   .full { grid-column: 1 / -1; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 14px; }
   .legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
@@ -673,7 +674,7 @@ new Chart(document.getElementById('waterfallChart'), {
       data: runnable.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
       backgroundColor: runnable.map(t => statusColor(t) + 'D9'),
       borderColor: runnable.map(statusColor),
-      borderWidth: 1, borderRadius: 4, barThickness: 12, borderSkipped: false,
+      borderWidth: 1, borderRadius: 4, barThickness: 9, borderSkipped: false,
     }]
   },
   options: {
