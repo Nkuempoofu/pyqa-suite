@@ -35,3 +35,37 @@ class BasePage:
             return True
         except Exception:
             return False
+
+    def click_and_expect(self, locator, expected_locator, timeout=15):
+        """Click an element and confirm the expected result appears.
+
+        React apps like saucedemo can render buttons before their click
+        handlers are attached, silently swallowing early clicks (common on
+        slow CI machines). This retries the click until the expected
+        element confirms the action actually happened.
+        """
+        self.driver.implicitly_wait(0)
+        attempt = {"count": 0}
+        try:
+            def _click_until_confirmed(driver):
+                if driver.find_elements(*expected_locator):
+                    return True
+                targets = driver.find_elements(*locator)
+                if targets:
+                    try:
+                        # Alternate native and JavaScript clicks: native
+                        # clicks can be silently swallowed by React apps
+                        # mid-hydration, while a JS click dispatches the
+                        # event directly on the element.
+                        if attempt["count"] % 2 == 0:
+                            targets[0].click()
+                        else:
+                            driver.execute_script("arguments[0].click();", targets[0])
+                    except Exception:
+                        pass
+                    attempt["count"] += 1
+                return False
+
+            WebDriverWait(self.driver, timeout).until(_click_until_confirmed)
+        finally:
+            self.driver.implicitly_wait(5)

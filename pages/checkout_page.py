@@ -21,7 +21,13 @@ class CheckoutPage(BasePage):
         self.type_text(self.FIRST_NAME, first_name)
         self.type_text(self.LAST_NAME, last_name)
         self.type_text(self.POSTAL_CODE, postal_code)
-        self.click(self.CONTINUE_BUTTON)
+        # Continue either advances to the overview page (summary total)
+        # or surfaces a validation error - confirm one of them appeared.
+        confirmation = (
+            By.CSS_SELECTOR,
+            ".summary_total_label, [data-test='error']",
+        )
+        self.click_and_expect(self.CONTINUE_BUTTON, confirmation)
 
     def get_error_message(self):
         return self.get_text(self.ERROR_MESSAGE)
@@ -30,7 +36,8 @@ class CheckoutPage(BasePage):
         return self.get_text(self.SUMMARY_TOTAL)
 
     def finish_order(self):
-        self.click(self.FINISH_BUTTON)
+        """Complete the order and confirm the confirmation screen loaded."""
+        self.click_and_expect(self.FINISH_BUTTON, self.CONFIRMATION_HEADER)
 
     def get_confirmation_message(self):
         return self.get_text(self.CONFIRMATION_HEADER)

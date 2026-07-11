@@ -31,15 +31,18 @@ class ProductsPage(BasePage):
         Select(self.find(self.SORT_DROPDOWN)).select_by_value(value)
 
     def add_product_to_cart(self, product_name):
-        """Click 'Add to cart' for a product by its display name."""
+        """Add a product and confirm via its Remove button appearing."""
         slug = product_name.lower().replace(" ", "-")
-        button = (By.ID, f"add-to-cart-{slug}")
-        self.click(button)
+        add_button = (By.ID, f"add-to-cart-{slug}")
+        remove_button = (By.ID, f"remove-{slug}")
+        self.click_and_expect(add_button, remove_button)
 
     def remove_product_from_cart(self, product_name):
+        """Remove a product and confirm via its Add button reappearing."""
         slug = product_name.lower().replace(" ", "-")
-        button = (By.ID, f"remove-{slug}")
-        self.click(button)
+        add_button = (By.ID, f"add-to-cart-{slug}")
+        remove_button = (By.ID, f"remove-{slug}")
+        self.click_and_expect(remove_button, add_button)
 
     def get_cart_count(self):
         if self.is_visible(self.CART_BADGE):
@@ -47,4 +50,6 @@ class ProductsPage(BasePage):
         return 0
 
     def open_cart(self):
-        self.click(self.CART_LINK)
+        """Open the cart and confirm the cart page loaded (checkout button visible)."""
+        checkout_button = (By.ID, "checkout")
+        self.click_and_expect(self.CART_LINK, checkout_button)

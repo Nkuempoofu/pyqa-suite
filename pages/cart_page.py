@@ -16,7 +16,11 @@ class CartPage(BasePage):
         return [el.text for el in self.driver.find_elements(*self.ITEM_NAMES)]
 
     def checkout(self):
-        self.click(self.CHECKOUT_BUTTON)
+        """Start checkout and confirm the customer info form loaded."""
+        first_name_field = (By.ID, "first-name")
+        self.click_and_expect(self.CHECKOUT_BUTTON, first_name_field)
 
     def continue_shopping(self):
-        self.click(self.CONTINUE_SHOPPING)
+        """Return to the inventory and confirm the product list loaded."""
+        inventory_list = (By.CLASS_NAME, "inventory_list")
+        self.click_and_expect(self.CONTINUE_SHOPPING, inventory_list)

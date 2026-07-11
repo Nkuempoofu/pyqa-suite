@@ -18,7 +18,10 @@ class LoginPage(BasePage):
     def login(self, username, password):
         self.type_text(self.USERNAME_INPUT, username)
         self.type_text(self.PASSWORD_INPUT, password)
-        self.click(self.LOGIN_BUTTON)
+        # Login either lands on the inventory page or shows an error -
+        # confirm one of the two so a swallowed click can't slip through.
+        confirmation = (By.CSS_SELECTOR, ".inventory_list, [data-test='error']")
+        self.click_and_expect(self.LOGIN_BUTTON, confirmation)
 
     def get_error_message(self):
         return self.get_text(self.ERROR_MESSAGE)
