@@ -5,13 +5,35 @@ and closes it automatically when the test finishes. On failure,
 a screenshot is attached to the Allure report automatically.
 """
 import os
+import platform
+import sys
 
 import allure
 import pytest
+import selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+
+
+@pytest.fixture(scope="session", autouse=True)
+def allure_environment(request):
+    """Write environment details into the Allure results for the report."""
+    results_dir = request.config.getoption("--alluredir", default=None)
+    if results_dir:
+        os.makedirs(results_dir, exist_ok=True)
+        lines = [
+            f"Python={platform.python_version()}",
+            f"Selenium={selenium.__version__}",
+            f"OS={platform.system()} {platform.release()}",
+            "Browser=Chrome (headless in CI)",
+            "Target.Site=https://www.saucedemo.com",
+            "API.Under.Test=https://jsonplaceholder.typicode.com",
+        ]
+        path = os.path.join(results_dir, "environment.properties")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines) + "\n")
 
 
 @pytest.fixture(scope="session")
