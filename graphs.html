@@ -116,6 +116,12 @@
       <div class="chart-box"><canvas id="severityChart"></canvas></div>
     </div>
 
+    <div class="chart-panel full" id="trendPanel" style="display:none;">
+      <div class="chart-title">Pass-rate trend</div>
+      <div class="chart-sub">Quality tracked across CI runs - every push and nightly run adds a point</div>
+      <div class="chart-box"><canvas id="trendChart"></canvas></div>
+    </div>
+
     <div class="chart-panel full">
       <div class="chart-title">Slowest tests</div>
       <div class="chart-sub">Top 10 by execution time - automation candidates for optimisation</div>
@@ -136,12 +142,12 @@
 
   <footer>
     <span>&copy; 2026 Nkululeko Mpofu &middot; QA Engineer</span>
-    <span>Generated 11 Jul 2026 &middot; 19:42 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
+    <span>Generated 11 Jul 2026 &middot; 20:11 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
   </footer>
 </div>
 
 <script>
-const DATA = {"stats": {"passed": 21, "failed": 0, "broken": 0, "skipped": 0}, "severities": {"critical": 11, "normal": 7, "minor": 1, "blocker": 2}, "tests": [{"name": "test_get_all_posts_returns_200_and_full_list", "status": "passed", "start": 1783798832012, "stop": 1783798832060, "duration": 48}, {"name": "test_get_single_post_has_expected_schema", "status": "passed", "start": 1783798832062, "stop": 1783798832096, "duration": 34}, {"name": "test_get_nonexistent_post_returns_404", "status": "passed", "start": 1783798832098, "stop": 1783798832333, "duration": 235}, {"name": "test_create_post_returns_201_with_new_id", "status": "passed", "start": 1783798832335, "stop": 1783798832435, "duration": 100}, {"name": "test_update_post_returns_200_with_changes", "status": "passed", "start": 1783798832437, "stop": 1783798832540, "duration": 103}, {"name": "test_delete_post_returns_200", "status": "passed", "start": 1783798832542, "stop": 1783798832640, "duration": 98}, {"name": "test_response_time_is_acceptable", "status": "passed", "start": 1783798832642, "stop": 1783798832674, "duration": 32}, {"name": "test_added_products_appear_in_cart", "status": "passed", "start": 1783798854711, "stop": 1783798857993, "duration": 3282}, {"name": "test_continue_shopping_returns_to_products", "status": "passed", "start": 1783798859456, "stop": 1783798861648, "duration": 2192}, {"name": "test_cart_is_empty_by_default", "status": "passed", "start": 1783798863105, "stop": 1783798869197, "duration": 6092}, {"name": "test_complete_checkout_end_to_end", "status": "passed", "start": 1783798870637, "stop": 1783798878149, "duration": 7512}, {"name": "test_checkout_requires_first_name", "status": "passed", "start": 1783798879568, "stop": 1783798885187, "duration": 5619}, {"name": "test_order_total_includes_tax", "status": "passed", "start": 1783798886610, "stop": 1783798892803, "duration": 6193}, {"name": "test_valid_login", "status": "passed", "start": 1783798893176, "stop": 1783798894224, "duration": 1048}, {"name": "test_invalid_password_shows_error", "status": "passed", "start": 1783798894575, "stop": 1783798895629, "duration": 1054}, {"name": "test_locked_out_user_is_blocked", "status": "passed", "start": 1783798895999, "stop": 1783798897047, "duration": 1048}, {"name": "test_all_products_are_displayed", "status": "passed", "start": 1783798898442, "stop": 1783798898471, "duration": 29}, {"name": "test_sort_products_by_price_low_to_high", "status": "passed", "start": 1783798899861, "stop": 1783798899977, "duration": 116}, {"name": "test_sort_products_by_name_z_to_a", "status": "passed", "start": 1783798901385, "stop": 1783798901500, "duration": 115}, {"name": "test_add_product_updates_cart_badge", "status": "passed", "start": 1783798902892, "stop": 1783798904004, "duration": 1112}, {"name": "test_remove_product_clears_cart_badge", "status": "passed", "start": 1783798905420, "stop": 1783798918158, "duration": 12738}]};
+const DATA = {"stats": {"passed": 21, "failed": 0, "broken": 0, "skipped": 0}, "severities": {"critical": 11, "normal": 7, "minor": 1, "blocker": 2}, "history": [{"run": 7, "passRate": 100, "total": 21}, {"run": 8, "passRate": 100, "total": 21}], "tests": [{"name": "test_get_all_posts_returns_200_and_full_list", "status": "passed", "start": 1783800617041, "stop": 1783800617110, "duration": 69}, {"name": "test_get_single_post_has_expected_schema", "status": "passed", "start": 1783800617112, "stop": 1783800617160, "duration": 48}, {"name": "test_get_nonexistent_post_returns_404", "status": "passed", "start": 1783800617162, "stop": 1783800617212, "duration": 50}, {"name": "test_create_post_returns_201_with_new_id", "status": "passed", "start": 1783800617214, "stop": 1783800617272, "duration": 58}, {"name": "test_update_post_returns_200_with_changes", "status": "passed", "start": 1783800617274, "stop": 1783800617341, "duration": 67}, {"name": "test_delete_post_returns_200", "status": "passed", "start": 1783800617343, "stop": 1783800617391, "duration": 48}, {"name": "test_response_time_is_acceptable", "status": "passed", "start": 1783800617392, "stop": 1783800617441, "duration": 49}, {"name": "test_added_products_appear_in_cart", "status": "passed", "start": 1783800630022, "stop": 1783800633315, "duration": 3293}, {"name": "test_continue_shopping_returns_to_products", "status": "passed", "start": 1783800634775, "stop": 1783800636953, "duration": 2178}, {"name": "test_cart_is_empty_by_default", "status": "passed", "start": 1783800638379, "stop": 1783800644515, "duration": 6136}, {"name": "test_complete_checkout_end_to_end", "status": "passed", "start": 1783800645958, "stop": 1783800653596, "duration": 7638}, {"name": "test_checkout_requires_first_name", "status": "passed", "start": 1783800655007, "stop": 1783800660610, "duration": 5603}, {"name": "test_order_total_includes_tax", "status": "passed", "start": 1783800662057, "stop": 1783800668226, "duration": 6169}, {"name": "test_valid_login", "status": "passed", "start": 1783800668589, "stop": 1783800669635, "duration": 1046}, {"name": "test_invalid_password_shows_error", "status": "passed", "start": 1783800670022, "stop": 1783800671167, "duration": 1145}, {"name": "test_locked_out_user_is_blocked", "status": "passed", "start": 1783800671554, "stop": 1783800672597, "duration": 1043}, {"name": "test_all_products_are_displayed", "status": "passed", "start": 1783800674029, "stop": 1783800674059, "duration": 30}, {"name": "test_sort_products_by_price_low_to_high", "status": "passed", "start": 1783800675461, "stop": 1783800675572, "duration": 111}, {"name": "test_sort_products_by_name_z_to_a", "status": "passed", "start": 1783800676966, "stop": 1783800677077, "duration": 111}, {"name": "test_add_product_updates_cart_badge", "status": "passed", "start": 1783800678502, "stop": 1783800679615, "duration": 1113}, {"name": "test_remove_product_clears_cart_badge", "status": "passed", "start": 1783800681034, "stop": 1783800693781, "duration": 12747}]};
 
 const css = getComputedStyle(document.documentElement);
 const C = {
@@ -220,6 +226,45 @@ new Chart(document.getElementById('severityChart'), {
     plugins: { legend: { position: 'right' } }
   }
 });
+
+// ── Pass-rate trend across runs ──
+if (DATA.history && DATA.history.length > 1) {
+  document.getElementById('trendPanel').style.display = '';
+  const hist = DATA.history;
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: hist.map(h => 'Run #' + h.run),
+      datasets: [
+        {
+          label: 'pass rate %',
+          data: hist.map(h => h.passRate),
+          borderColor: C.cyanL, backgroundColor: 'rgba(34,211,238,0.12)',
+          fill: true, tension: 0.35, borderWidth: 2.5,
+          pointBackgroundColor: hist.map(h => h.passRate === 100 ? C.pass : C.warn),
+          pointBorderColor: '#0f172a', pointRadius: 5, pointHoverRadius: 7,
+          yAxisID: 'y',
+        },
+        {
+          label: 'total tests',
+          data: hist.map(h => h.total),
+          borderColor: C.violet, borderDash: [6, 5], borderWidth: 1.5,
+          pointRadius: 3, pointBackgroundColor: C.violet, fill: false, tension: 0.3,
+          yAxisID: 'y1',
+        },
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+        y: { min: 0, max: 100, title: { display: true, text: 'pass rate %', color: C.muted }, grid: { color: C.faint } },
+        y1: { position: 'right', beginAtZero: true, title: { display: true, text: 'tests', color: C.muted }, grid: { display: false } },
+        x: { grid: { display: false } }
+      },
+      plugins: { legend: { position: 'top', align: 'end' } }
+    }
+  });
+}
 
 // ── Slowest tests ──
 const slow = [...DATA.tests].sort((a, b) => b.duration - a.duration).slice(0, 10).reverse();
