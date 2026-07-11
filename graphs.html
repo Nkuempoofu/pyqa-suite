@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analytics | PyQA Suite | Nkululeko Mpofu</title>
+<meta name="description" content="Test analytics for PyQA Suite - status, severity, durations, and execution waterfall.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#129514;</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #020617; --surface: #0a0f1e; --card: #0f172a; --card-hover: #131d35;
+    --border: rgba(30,41,59,0.7); --border-h: rgba(6,182,212,0.45);
+    --accent: #06b6d4; --accent-l: #22d3ee; --accent-g: rgba(6,182,212,0.10);
+    --violet: #8b5cf6; --text: #f1f5f9; --muted: #94a3b8; --faint: #334155;
+    --radius: 12px; --radius-lg: 20px;
+    --mono: 'Space Mono', monospace; --sans: 'Inter', sans-serif;
+    --pass: #34d399; --fail: #f87171; --warn: #fbbf24; --skip: #64748b;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: linear-gradient(145deg, #020617 0%, #0a0f1e 40%, #0f172a 100%);
+    background-attachment: fixed;
+    color: var(--text); font-family: var(--sans); line-height: 1.6; min-height: 100vh;
+  }
+  .glow {
+    position: fixed; top: -220px; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 480px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(ellipse, rgba(6,182,212,0.13) 0%, transparent 65%);
+  }
+  .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px 80px; position: relative; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 26px 0 0; }
+  .brand { font-family: var(--mono); font-weight: 700; font-size: 16px; color: var(--text); text-decoration: none; }
+  .brand span { color: var(--accent-l); }
+  .nav-links { display: flex; gap: 24px; align-items: center; flex-wrap: wrap; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent-l); }
+  .nav-links a.active { color: var(--accent-l); }
+  .kicker {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.28em;
+    color: var(--accent-l); text-transform: uppercase; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ''; width: 34px; height: 1px; background: var(--accent); }
+  .section { margin-top: 56px; }
+  .section h2 {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.28em;
+    color: var(--accent-l); text-transform: uppercase; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section h2::before { content: ''; width: 34px; height: 1px; background: var(--accent); }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 30px; }
+  footer {
+    margin-top: 80px; padding-top: 26px; border-top: 1px solid var(--border);
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;
+    color: var(--faint); font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em;
+  }
+  footer a { color: var(--muted); text-decoration: none; }
+  footer a:hover { color: var(--accent-l); }
+
+  header { padding: 56px 0 0; }
+  h1 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin-top: 12px; max-width: 640px; font-size: 16px; }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 44px; }
+  .chart-panel {
+    background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 26px; transition: border-color 0.25s;
+  }
+  .chart-panel:hover { border-color: var(--border-h); }
+  .chart-title { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .chart-sub { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
+  .chart-box { position: relative; height: 300px; }
+  .chart-box.tall { height: 560px; }
+  .full { grid-column: 1 / -1; }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
+  .swatch { width: 11px; height: 11px; border-radius: 3px; }
+  @media (max-width: 900px) { .charts { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+
+  <nav>
+    <a class="brand" href="./">&lt;/&gt; PyQA<span>Suite</span></a>
+    <div class="nav-links">
+      <a href="./">Dashboard</a>
+      <a href="./graphs.html" class="active">Analytics</a>
+      <a href="./report/" target="_blank" rel="noopener">Full report &#8599;</a>
+      <a href="https://github.com/Nkuempoofu/pyqa-suite" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://nkululeko-portfolio.vercel.app" target="_blank" rel="noopener">Portfolio</a>
+    </div>
+  </nav>
+
+  <header>
+    <div class="kicker">Analytics &middot; Latest Run</div>
+    <h1>The run, <span style="color: var(--accent-l);">visualised.</span></h1>
+    <p class="sub">Status, severity, speed, and the execution waterfall of the latest CI run - generated from the raw Allure data.</p>
+  </header>
+
+  <div class="charts">
+    <div class="chart-panel">
+      <div class="chart-title">Result breakdown</div>
+      <div class="chart-sub">Every test in the latest run by outcome</div>
+      <div class="chart-box"><canvas id="statusChart"></canvas></div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-title">Severity coverage</div>
+      <div class="chart-sub">How critical the covered scenarios are</div>
+      <div class="chart-box"><canvas id="severityChart"></canvas></div>
+    </div>
+
+    <div class="chart-panel full">
+      <div class="chart-title">Slowest tests</div>
+      <div class="chart-sub">Top 10 by execution time - automation candidates for optimisation</div>
+      <div class="chart-box"><canvas id="slowChart"></canvas></div>
+    </div>
+
+    <div class="chart-panel full">
+      <div class="chart-title">Execution waterfall</div>
+      <div class="chart-sub">When each test started and finished, relative to the start of the run</div>
+      <div class="legend">
+        <span><span class="swatch" style="background:#34d399"></span>passed</span>
+        <span><span class="swatch" style="background:#f87171"></span>failed / broken</span>
+        <span><span class="swatch" style="background:#64748b"></span>skipped</span>
+      </div>
+      <div class="chart-box tall"><canvas id="waterfallChart"></canvas></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>&copy; 2026 Nkululeko Mpofu &middot; QA Engineer</span>
+    <span>Generated 11 Jul 2026 &middot; 19:42 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
+  </footer>
+</div>
+
+<script>
+const DATA = {"stats": {"passed": 21, "failed": 0, "broken": 0, "skipped": 0}, "severities": {"critical": 11, "normal": 7, "minor": 1, "blocker": 2}, "tests": [{"name": "test_get_all_posts_returns_200_and_full_list", "status": "passed", "start": 1783798832012, "stop": 1783798832060, "duration": 48}, {"name": "test_get_single_post_has_expected_schema", "status": "passed", "start": 1783798832062, "stop": 1783798832096, "duration": 34}, {"name": "test_get_nonexistent_post_returns_404", "status": "passed", "start": 1783798832098, "stop": 1783798832333, "duration": 235}, {"name": "test_create_post_returns_201_with_new_id", "status": "passed", "start": 1783798832335, "stop": 1783798832435, "duration": 100}, {"name": "test_update_post_returns_200_with_changes", "status": "passed", "start": 1783798832437, "stop": 1783798832540, "duration": 103}, {"name": "test_delete_post_returns_200", "status": "passed", "start": 1783798832542, "stop": 1783798832640, "duration": 98}, {"name": "test_response_time_is_acceptable", "status": "passed", "start": 1783798832642, "stop": 1783798832674, "duration": 32}, {"name": "test_added_products_appear_in_cart", "status": "passed", "start": 1783798854711, "stop": 1783798857993, "duration": 3282}, {"name": "test_continue_shopping_returns_to_products", "status": "passed", "start": 1783798859456, "stop": 1783798861648, "duration": 2192}, {"name": "test_cart_is_empty_by_default", "status": "passed", "start": 1783798863105, "stop": 1783798869197, "duration": 6092}, {"name": "test_complete_checkout_end_to_end", "status": "passed", "start": 1783798870637, "stop": 1783798878149, "duration": 7512}, {"name": "test_checkout_requires_first_name", "status": "passed", "start": 1783798879568, "stop": 1783798885187, "duration": 5619}, {"name": "test_order_total_includes_tax", "status": "passed", "start": 1783798886610, "stop": 1783798892803, "duration": 6193}, {"name": "test_valid_login", "status": "passed", "start": 1783798893176, "stop": 1783798894224, "duration": 1048}, {"name": "test_invalid_password_shows_error", "status": "passed", "start": 1783798894575, "stop": 1783798895629, "duration": 1054}, {"name": "test_locked_out_user_is_blocked", "status": "passed", "start": 1783798895999, "stop": 1783798897047, "duration": 1048}, {"name": "test_all_products_are_displayed", "status": "passed", "start": 1783798898442, "stop": 1783798898471, "duration": 29}, {"name": "test_sort_products_by_price_low_to_high", "status": "passed", "start": 1783798899861, "stop": 1783798899977, "duration": 116}, {"name": "test_sort_products_by_name_z_to_a", "status": "passed", "start": 1783798901385, "stop": 1783798901500, "duration": 115}, {"name": "test_add_product_updates_cart_badge", "status": "passed", "start": 1783798902892, "stop": 1783798904004, "duration": 1112}, {"name": "test_remove_product_clears_cart_badge", "status": "passed", "start": 1783798905420, "stop": 1783798918158, "duration": 12738}]};
+
+const css = getComputedStyle(document.documentElement);
+const C = {
+  text: '#f1f5f9', muted: '#94a3b8', faint: 'rgba(51,65,85,0.45)',
+  cyan: '#06b6d4', cyanL: '#22d3ee', violet: '#8b5cf6',
+  pass: '#34d399', fail: '#f87171', warn: '#fbbf24', skip: '#64748b',
+};
+
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.font.size = 12.5;
+Chart.defaults.color = C.muted;
+Chart.defaults.borderColor = C.faint;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.pointStyle = 'rectRounded';
+Chart.defaults.plugins.legend.labels.padding = 18;
+Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(2,6,23,0.92)';
+Chart.defaults.plugins.tooltip.borderColor = 'rgba(6,182,212,0.4)';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.titleFont = { family: "'Space Mono', monospace", size: 12 };
+
+// ── Result breakdown doughnut ──
+const s = DATA.stats;
+new Chart(document.getElementById('statusChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Passed', 'Failed', 'Broken', 'Skipped'],
+    datasets: [{
+      data: [s.passed, s.failed, s.broken, s.skipped],
+      backgroundColor: [C.pass, C.fail, C.warn, C.skip],
+      borderColor: '#0f172a', borderWidth: 4, hoverOffset: 10,
+    }]
+  },
+  options: {
+    maintainAspectRatio: false, cutout: '68%',
+    plugins: { legend: { position: 'right' } }
+  },
+  plugins: [{
+    id: 'centerText',
+    afterDraw(chart) {
+      const executed = s.passed + s.failed + s.broken;
+      const pct = executed ? Math.round(s.passed / executed * 100) : 0;
+      const { ctx, chartArea } = chart;
+      const x = (chartArea.left + chartArea.right) / 2;
+      const y = (chartArea.top + chartArea.bottom) / 2;
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.fillStyle = C.text;
+      ctx.font = "800 30px 'Inter', sans-serif";
+      ctx.fillText(pct + '%', x, y - 2);
+      ctx.fillStyle = C.muted;
+      ctx.font = "12px 'Space Mono', monospace";
+      ctx.fillText('pass rate', x, y + 20);
+      ctx.restore();
+    }
+  }]
+});
+
+// ── Severity polar chart ──
+const sevOrder = ['blocker', 'critical', 'normal', 'minor', 'trivial'];
+const sevColors = { blocker: C.fail, critical: C.warn, normal: C.cyan, minor: C.violet, trivial: C.skip };
+const sevData = sevOrder.filter(k => DATA.severities[k]).map(k => ({ k, v: DATA.severities[k] }));
+new Chart(document.getElementById('severityChart'), {
+  type: 'polarArea',
+  data: {
+    labels: sevData.map(d => d.k),
+    datasets: [{
+      data: sevData.map(d => d.v),
+      backgroundColor: sevData.map(d => sevColors[d.k] + 'CC'),
+      borderColor: '#0f172a', borderWidth: 3,
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    scales: { r: { grid: { color: C.faint }, ticks: { display: false } } },
+    plugins: { legend: { position: 'right' } }
+  }
+});
+
+// ── Slowest tests ──
+const slow = [...DATA.tests].sort((a, b) => b.duration - a.duration).slice(0, 10).reverse();
+new Chart(document.getElementById('slowChart'), {
+  type: 'bar',
+  data: {
+    labels: slow.map(t => t.name.replace(/^test_/, '').replaceAll('_', ' ')),
+    datasets: [{
+      data: slow.map(t => +(t.duration / 1000).toFixed(1)),
+      backgroundColor: slow.map((t, i) => i === slow.length - 1 ? C.cyanL : C.cyan + 'B3'),
+      borderRadius: 6, barThickness: 18,
+    }]
+  },
+  options: {
+    indexAxis: 'y', maintainAspectRatio: false,
+    scales: {
+      x: { title: { display: true, text: 'seconds', color: C.muted }, grid: { color: C.faint } },
+      y: { grid: { display: false } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ` ${ctx.parsed.x}s` } }
+    }
+  }
+});
+
+// ── Execution waterfall ──
+const runnable = DATA.tests.filter(t => t.start && t.stop).sort((a, b) => a.start - b.start);
+const t0 = runnable.length ? runnable[0].start : 0;
+const statusColor = t => t.status === 'passed' ? C.pass : (t.status === 'skipped' ? C.skip : C.fail);
+new Chart(document.getElementById('waterfallChart'), {
+  type: 'bar',
+  data: {
+    labels: runnable.map(t => t.name.replace(/^test_/, '').replaceAll('_', ' ')),
+    datasets: [{
+      data: runnable.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
+      backgroundColor: runnable.map(t => statusColor(t) + 'D9'),
+      borderColor: runnable.map(statusColor),
+      borderWidth: 1, borderRadius: 4, barThickness: 12, borderSkipped: false,
+    }]
+  },
+  options: {
+    indexAxis: 'y', maintainAspectRatio: false,
+    scales: {
+      x: { position: 'top', title: { display: true, text: 'seconds since run start', color: C.muted }, grid: { color: C.faint } },
+      y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11.5 } } }
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const t = runnable[ctx.dataIndex];
+            return ` ${t.status} · ${((t.stop - t.start) / 1000).toFixed(1)}s (${((t.start - t0) / 1000).toFixed(1)}s → ${((t.stop - t0) / 1000).toFixed(1)}s)`;
+          }
+        }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
