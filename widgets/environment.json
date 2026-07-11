@@ -1,1 +1,1 @@
-[]
+[{"values":["3.12.13"],"name":"Python"},{"values":["4.45.0"],"name":"Selenium"},{"values":["Linux 6.17.0-1018-azure"],"name":"OS"},{"values":["Chrome (headless in CI)"],"name":"Browser"},{"values":["https://www.saucedemo.com"],"name":"Target.Site"},{"values":["https://jsonplaceholder.typicode.com"],"name":"API.Under.Test"}]

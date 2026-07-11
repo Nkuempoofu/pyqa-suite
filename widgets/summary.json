@@ -1,1 +1,1 @@
-{"reportName":"Allure Report","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":21,"unknown":0,"total":21},"time":{"start":1783788628119,"stop":1783788700975,"duration":72856,"minDuration":31,"maxDuration":12679,"sumDuration":47781}}
+{"reportName":"PyQA Suite - Test Report","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":21,"unknown":0,"total":21},"time":{"start":1783794862184,"stop":1783794935668,"duration":73484,"minDuration":27,"maxDuration":12654,"sumDuration":48461}}
