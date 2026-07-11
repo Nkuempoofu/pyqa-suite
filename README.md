@@ -1,4 +1,4 @@
-# PyQA Suite - Automated Web Testing Framework
+﻿# PyQA Suite - Automated Web Testing Framework
 
 [![Test Suite](https://github.com/Nkuempoofu/pyqa-suite/actions/workflows/tests.yml/badge.svg)](https://github.com/Nkuempoofu/pyqa-suite/actions/workflows/tests.yml)
 [![Tests](https://img.shields.io/endpoint?url=https%3A%2F%2Fnkuempoofu.github.io%2Fpyqa-suite%2Fbadge.json)](https://nkuempoofu.github.io/pyqa-suite/)
@@ -16,7 +16,7 @@ A Python + Selenium WebDriver test automation framework built with the Page Obje
 ## Tech Stack
 
 - **Python 3.14** - core language
-- **Selenium WebDriver 4** - browser automation, **Chrome + Firefox** cross-browser matrix
+- **Selenium WebDriver 4** - browser automation, **Chrome + Edge** cross-browser matrix
 - **pytest** - test runner, fixtures, markers, and data-driven parametrisation
 - **Page Object Model (POM)** - maintainable test architecture
 - **requests** - REST API testing
@@ -76,7 +76,7 @@ $env:HEADLESS="1"; pytest  # Windows PowerShell
 
 ## Test Coverage
 
-26 automated test cases per browser (52 across the Chrome + Firefox matrix), plus 9 on-demand site health checks:
+26 automated test cases per browser (52 across the Chrome + Edge matrix), plus 9 on-demand site health checks:
 
 | Suite | Scenarios | Markers |
 |-------|-----------|---------|

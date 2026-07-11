@@ -342,7 +342,7 @@ def build_index(report_dir, output_dir):
     <div class="chips">
       <span class="chip">Python</span><span class="chip">Selenium WebDriver</span>
       <span class="chip">pytest</span><span class="chip">Page Object Model</span>
-      <span class="chip">Cross-browser: Chrome + Firefox</span>
+      <span class="chip">Cross-browser: Chrome + Edge</span>
       <span class="chip">REST API Testing</span><span class="chip">Accessibility (axe-core)</span>
       <span class="chip">Allure</span><span class="chip">GitHub Actions</span>{skip_note}
     </div>

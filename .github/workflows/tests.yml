@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, firefox]
+        browser: [chrome, edge]
 
     steps:
       - name: Check out the repository
@@ -79,18 +79,18 @@ jobs:
           name: allure-results-chrome
           path: reports/allure-results
 
-      - name: Download Firefox results
+      - name: Download Edge results
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
-          name: allure-results-firefox
+          name: allure-results-edge
           path: reports/allure-results
 
       - name: Write combined environment info
         run: |
           cat > reports/allure-results/environment.properties << EOF
           Python=3.12
-          Browsers=Chrome + Firefox (matrix)
+          Browsers=Chrome + Microsoft Edge (matrix)
           OS=Ubuntu (GitHub Actions)
           Target.Site=https://www.saucedemo.com
           API.Under.Test=https://jsonplaceholder.typicode.com
