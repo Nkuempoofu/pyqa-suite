@@ -420,7 +420,7 @@ def build_index(report_dir, output_dir):
     print(f"index.html written ({executed} executed, {pass_pct}% pass)")
 
 
-GRAPHS_TEMPLATE = """<!DOCTYPE html>
+GRAPHS_TEMPLATE = r"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -445,7 +445,7 @@ GRAPHS_TEMPLATE = """<!DOCTYPE html>
   .chart-title { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
   .chart-sub { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
   .chart-box { position: relative; height: 300px; }
-  .chart-box.tall { height: 860px; }
+  .chart-box.tall { height: 540px; }
   .full { grid-column: 1 / -1; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 14px; }
   .legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
@@ -499,15 +499,26 @@ GRAPHS_TEMPLATE = """<!DOCTYPE html>
       <div class="chart-box"><canvas id="slowChart"></canvas></div>
     </div>
 
-    <div class="chart-panel full">
-      <div class="chart-title">Execution waterfall</div>
+    <div class="chart-panel full" id="wfPanel1">
+      <div class="chart-title" id="wfTitle1">Execution waterfall</div>
       <div class="chart-sub">When each test started and finished, relative to the start of the run</div>
       <div class="legend">
         <span><span class="swatch" style="background:#34d399"></span>passed</span>
         <span><span class="swatch" style="background:#f87171"></span>failed / broken</span>
         <span><span class="swatch" style="background:#64748b"></span>skipped</span>
       </div>
-      <div class="chart-box tall"><canvas id="waterfallChart"></canvas></div>
+      <div class="chart-box tall"><canvas id="waterfall1"></canvas></div>
+    </div>
+
+    <div class="chart-panel full" id="wfPanel2" style="display:none;">
+      <div class="chart-title" id="wfTitle2">Execution waterfall</div>
+      <div class="chart-sub">When each test started and finished, relative to the start of the run</div>
+      <div class="legend">
+        <span><span class="swatch" style="background:#34d399"></span>passed</span>
+        <span><span class="swatch" style="background:#f87171"></span>failed / broken</span>
+        <span><span class="swatch" style="background:#64748b"></span>skipped</span>
+      </div>
+      <div class="chart-box tall"><canvas id="waterfall2"></canvas></div>
     </div>
   </div>
 
@@ -662,40 +673,63 @@ new Chart(document.getElementById('slowChart'), {
   }
 });
 
-// ── Execution waterfall ──
+// ── Execution waterfalls (one per browser) ──
 const runnable = DATA.tests.filter(t => t.start && t.stop).sort((a, b) => a.start - b.start);
-const t0 = runnable.length ? runnable[0].start : 0;
 const statusColor = t => t.status === 'passed' ? C.pass : (t.status === 'skipped' ? C.skip : C.fail);
-new Chart(document.getElementById('waterfallChart'), {
-  type: 'bar',
-  data: {
-    labels: runnable.map(t => t.name.replace(/^test_/, '').replaceAll('_', ' ')),
-    datasets: [{
-      data: runnable.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
-      backgroundColor: runnable.map(t => statusColor(t) + 'D9'),
-      borderColor: runnable.map(statusColor),
-      borderWidth: 1, borderRadius: 4, barThickness: 9, borderSkipped: false,
-    }]
-  },
-  options: {
-    indexAxis: 'y', maintainAspectRatio: false,
-    scales: {
-      x: { position: 'top', title: { display: true, text: 'seconds since run start', color: C.muted }, grid: { color: C.faint } },
-      y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11.5 } } }
+const browserOf = name => { const m = name.match(/\[(\w+)\]\s*$/); return m ? m[1] : null; };
+
+const groups = {};
+runnable.forEach(t => {
+  const b = browserOf(t.name) || 'all tests';
+  (groups[b] = groups[b] || []).push(t);
+});
+const groupNames = Object.keys(groups).sort();
+
+function renderWaterfall(canvasId, tests, browser) {
+  const t0 = tests[0].start;
+  new Chart(document.getElementById(canvasId), {
+    type: 'bar',
+    data: {
+      labels: tests.map(t => t.name.replace(/\s*\[\w+\]\s*$/, '').replace(/^test_/, '').replaceAll('_', ' ')),
+      datasets: [{
+        data: tests.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
+        backgroundColor: tests.map(t => statusColor(t) + 'D9'),
+        borderColor: tests.map(statusColor),
+        borderWidth: 1, borderRadius: 4, barThickness: 11, borderSkipped: false,
+      }]
     },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const t = runnable[ctx.dataIndex];
-            return ` ${t.status} · ${((t.stop - t.start) / 1000).toFixed(1)}s (${((t.start - t0) / 1000).toFixed(1)}s → ${((t.stop - t0) / 1000).toFixed(1)}s)`;
+    options: {
+      indexAxis: 'y', maintainAspectRatio: false,
+      scales: {
+        x: { position: 'top', title: { display: true, text: 'seconds since run start', color: C.muted }, grid: { color: C.faint } },
+        y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11.5 } } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const t = tests[ctx.dataIndex];
+              return ` ${t.status} · ${((t.stop - t.start) / 1000).toFixed(1)}s (${((t.start - t0) / 1000).toFixed(1)}s → ${((t.stop - t0) / 1000).toFixed(1)}s)`;
+            }
           }
         }
       }
     }
-  }
-});
+  });
+}
+
+if (groupNames.length) {
+  const label1 = groupNames[0] === 'all tests' ? '' : ' - ' + groupNames[0].charAt(0).toUpperCase() + groupNames[0].slice(1);
+  document.getElementById('wfTitle1').textContent = 'Execution waterfall' + label1;
+  renderWaterfall('waterfall1', groups[groupNames[0]], groupNames[0]);
+}
+if (groupNames.length > 1) {
+  const label2 = ' - ' + groupNames[1].charAt(0).toUpperCase() + groupNames[1].slice(1);
+  document.getElementById('wfPanel2').style.display = '';
+  document.getElementById('wfTitle2').textContent = 'Execution waterfall' + label2;
+  renderWaterfall('waterfall2', groups[groupNames[1]], groupNames[1]);
+}
 </script>
 </body>
 </html>
