@@ -1,1 +1,1 @@
-[{"values":["3.12"],"name":"Python"},{"values":["Chrome + Firefox (matrix)"],"name":"Browsers"},{"values":["Ubuntu (GitHub Actions)"],"name":"OS"},{"values":["https://www.saucedemo.com"],"name":"Target.Site"},{"values":["https://jsonplaceholder.typicode.com"],"name":"API.Under.Test"}]
+[{"values":["3.12"],"name":"Python"},{"values":["Chrome + Microsoft Edge (matrix)"],"name":"Browsers"},{"values":["Ubuntu (GitHub Actions)"],"name":"OS"},{"values":["https://www.saucedemo.com"],"name":"Target.Site"},{"values":["https://jsonplaceholder.typicode.com"],"name":"API.Under.Test"}]
