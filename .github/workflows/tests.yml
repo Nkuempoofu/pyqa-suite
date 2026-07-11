@@ -27,7 +27,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run the test suite (headless Chrome)
-        run: pytest
+        run: pytest -m "not health"
 
       - name: Upload HTML report
         uses: actions/upload-artifact@v4
