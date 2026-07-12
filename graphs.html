@@ -74,7 +74,7 @@
   .chart-title { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.22em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
   .chart-sub { color: var(--faint); font-size: 13px; margin-bottom: 18px; }
   .chart-box { position: relative; height: 300px; }
-  .chart-box.tall { height: 860px; }
+  .chart-box.tall { height: 540px; }
   .full { grid-column: 1 / -1; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 14px; }
   .legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--muted); font-family: var(--mono); }
@@ -128,26 +128,37 @@
       <div class="chart-box"><canvas id="slowChart"></canvas></div>
     </div>
 
-    <div class="chart-panel full">
-      <div class="chart-title">Execution waterfall</div>
+    <div class="chart-panel full" id="wfPanel1">
+      <div class="chart-title" id="wfTitle1">Execution waterfall</div>
       <div class="chart-sub">When each test started and finished, relative to the start of the run</div>
       <div class="legend">
         <span><span class="swatch" style="background:#34d399"></span>passed</span>
         <span><span class="swatch" style="background:#f87171"></span>failed / broken</span>
         <span><span class="swatch" style="background:#64748b"></span>skipped</span>
       </div>
-      <div class="chart-box tall"><canvas id="waterfallChart"></canvas></div>
+      <div class="chart-box tall"><canvas id="waterfall1"></canvas></div>
+    </div>
+
+    <div class="chart-panel full" id="wfPanel2" style="display:none;">
+      <div class="chart-title" id="wfTitle2">Execution waterfall</div>
+      <div class="chart-sub">When each test started and finished, relative to the start of the run</div>
+      <div class="legend">
+        <span><span class="swatch" style="background:#34d399"></span>passed</span>
+        <span><span class="swatch" style="background:#f87171"></span>failed / broken</span>
+        <span><span class="swatch" style="background:#64748b"></span>skipped</span>
+      </div>
+      <div class="chart-box tall"><canvas id="waterfall2"></canvas></div>
     </div>
   </div>
 
   <footer>
     <span>&copy; 2026 Nkululeko Mpofu &middot; QA Engineer</span>
-    <span>Generated 12 Jul 2026 &middot; 01:58 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
+    <span>Generated 12 Jul 2026 &middot; 17:08 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
   </footer>
 </div>
 
 <script>
-const DATA = {"stats": {"passed": 52, "failed": 0, "broken": 0, "skipped": 0}, "severities": {"critical": 26, "normal": 14, "minor": 4, "blocker": 8}, "history": [{"run": 7, "passRate": 100, "total": 21}, {"run": 8, "passRate": 100, "total": 21}, {"run": 9, "passRate": 100, "total": 52}, {"run": 10, "passRate": 100, "total": 52}, {"run": 11, "passRate": 100, "total": 52}], "tests": [{"name": "test_get_all_posts_returns_200_and_full_list [chrome]", "status": "passed", "start": 1783821382676, "stop": 1783821382758, "duration": 82}, {"name": "test_get_single_post_has_expected_schema [chrome]", "status": "passed", "start": 1783821382760, "stop": 1783821382800, "duration": 40}, {"name": "test_get_nonexistent_post_returns_404 [chrome]", "status": "passed", "start": 1783821382801, "stop": 1783821382846, "duration": 45}, {"name": "test_create_post_returns_201_with_new_id [chrome]", "status": "passed", "start": 1783821382848, "stop": 1783821382911, "duration": 63}, {"name": "test_update_post_returns_200_with_changes [chrome]", "status": "passed", "start": 1783821382912, "stop": 1783821383020, "duration": 108}, {"name": "test_delete_post_returns_200 [chrome]", "status": "passed", "start": 1783821383022, "stop": 1783821383132, "duration": 110}, {"name": "test_response_time_is_acceptable [chrome]", "status": "passed", "start": 1783821383134, "stop": 1783821383174, "duration": 40}, {"name": "test_get_all_posts_returns_200_and_full_list [edge]", "status": "passed", "start": 1783821388391, "stop": 1783821388433, "duration": 42}, {"name": "test_get_single_post_has_expected_schema [edge]", "status": "passed", "start": 1783821388436, "stop": 1783821388472, "duration": 36}, {"name": "test_get_nonexistent_post_returns_404 [edge]", "status": "passed", "start": 1783821388474, "stop": 1783821388514, "duration": 40}, {"name": "test_create_post_returns_201_with_new_id [edge]", "status": "passed", "start": 1783821388516, "stop": 1783821388736, "duration": 220}, {"name": "test_update_post_returns_200_with_changes [edge]", "status": "passed", "start": 1783821388738, "stop": 1783821388966, "duration": 228}, {"name": "test_delete_post_returns_200 [edge]", "status": "passed", "start": 1783821388968, "stop": 1783821389066, "duration": 98}, {"name": "test_response_time_is_acceptable [edge]", "status": "passed", "start": 1783821389068, "stop": 1783821389105, "duration": 37}, {"name": "test_added_products_appear_in_cart [chrome]", "status": "passed", "start": 1783821394712, "stop": 1783821397986, "duration": 3274}, {"name": "test_continue_shopping_returns_to_products [chrome]", "status": "passed", "start": 1783821399378, "stop": 1783821401559, "duration": 2181}, {"name": "test_cart_is_empty_by_default [chrome]", "status": "passed", "start": 1783821402942, "stop": 1783821408565, "duration": 5623}, {"name": "test_added_products_appear_in_cart [edge]", "status": "passed", "start": 1783821412212, "stop": 1783821414061, "duration": 1849}, {"name": "test_continue_shopping_returns_to_products [edge]", "status": "passed", "start": 1783821415770, "stop": 1783821416946, "duration": 1176}, {"name": "test_cart_is_empty_by_default [edge]", "status": "passed", "start": 1783821418620, "stop": 1783821424260, "duration": 5640}, {"name": "test_complete_checkout_end_to_end [chrome]", "status": "passed", "start": 1783821409947, "stop": 1783821417297, "duration": 7350}, {"name": "test_checkout_requires_first_name [chrome]", "status": "passed", "start": 1783821418673, "stop": 1783821424271, "duration": 5598}, {"name": "test_order_total_includes_tax [chrome]", "status": "passed", "start": 1783821425633, "stop": 1783821431798, "duration": 6165}, {"name": "test_complete_checkout_end_to_end [edge]", "status": "passed", "start": 1783821425954, "stop": 1783821429332, "duration": 3378}, {"name": "test_checkout_requires_first_name [edge]", "status": "passed", "start": 1783821431069, "stop": 1783821433763, "duration": 2694}, {"name": "test_order_total_includes_tax [edge]", "status": "passed", "start": 1783821435462, "stop": 1783821438221, "duration": 2759}, {"name": "test_valid_users_can_login[standard_user] [chrome]", "status": "passed", "start": 1783821432140, "stop": 1783821433178, "duration": 1038}, {"name": "test_valid_users_can_login[problem_user] [chrome]", "status": "passed", "start": 1783821433513, "stop": 1783821434548, "duration": 1035}, {"name": "test_valid_users_can_login[performance_glitch_user] [chrome]", "status": "passed", "start": 1783821434878, "stop": 1783821440939, "duration": 6061}, {"name": "test_valid_users_can_login[standard_user] [edge]", "status": "passed", "start": 1783821438697, "stop": 1783821439916, "duration": 1219}, {"name": "test_valid_users_can_login[problem_user] [edge]", "status": "passed", "start": 1783821440377, "stop": 1783821441584, "duration": 1207}, {"name": "test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [chrome]", "status": "passed", "start": 1783821441268, "stop": 1783821442307, "duration": 1039}, {"name": "test_valid_users_can_login[performance_glitch_user] [edge]", "status": "passed", "start": 1783821442057, "stop": 1783821448266, "duration": 6209}, {"name": "test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [chrome]", "status": "passed", "start": 1783821442644, "stop": 1783821443682, "duration": 1038}, {"name": "test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [chrome]", "status": "passed", "start": 1783821444018, "stop": 1783821444990, "duration": 972}, {"name": "test_locked_out_user_is_blocked [chrome]", "status": "passed", "start": 1783821445324, "stop": 1783821446359, "duration": 1035}, {"name": "test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [edge]", "status": "passed", "start": 1783821448733, "stop": 1783821449933, "duration": 1200}, {"name": "test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [edge]", "status": "passed", "start": 1783821450428, "stop": 1783821451630, "duration": 1202}, {"name": "test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [edge]", "status": "passed", "start": 1783821452098, "stop": 1783821453206, "duration": 1108}, {"name": "test_locked_out_user_is_blocked [edge]", "status": "passed", "start": 1783821453656, "stop": 1783821454856, "duration": 1200}, {"name": "test_all_products_are_displayed [chrome]", "status": "passed", "start": 1783821447738, "stop": 1783821447768, "duration": 30}, {"name": "test_sort_products_by_price_low_to_high [chrome]", "status": "passed", "start": 1783821449144, "stop": 1783821449253, "duration": 109}, {"name": "test_sort_products_by_name_z_to_a [chrome]", "status": "passed", "start": 1783821450600, "stop": 1783821450716, "duration": 116}, {"name": "test_add_product_updates_cart_badge [chrome]", "status": "passed", "start": 1783821452075, "stop": 1783821453186, "duration": 1111}, {"name": "test_remove_product_clears_cart_badge [chrome]", "status": "passed", "start": 1783821454544, "stop": 1783821467282, "duration": 12738}, {"name": "test_all_products_are_displayed [edge]", "status": "passed", "start": 1783821456527, "stop": 1783821456562, "duration": 35}, {"name": "test_sort_products_by_price_low_to_high [edge]", "status": "passed", "start": 1783821458220, "stop": 1783821458356, "duration": 136}, {"name": "test_sort_products_by_name_z_to_a [edge]", "status": "passed", "start": 1783821460019, "stop": 1783821460155, "duration": 136}, {"name": "test_add_product_updates_cart_badge [edge]", "status": "passed", "start": 1783821461832, "stop": 1783821462449, "duration": 617}, {"name": "test_remove_product_clears_cart_badge [edge]", "status": "passed", "start": 1783821464129, "stop": 1783821475856, "duration": 11727}, {"name": "test_problem_user_has_broken_sorting_defect [chrome]", "status": "passed", "start": 1783821467634, "stop": 1783821468769, "duration": 1135}, {"name": "test_problem_user_has_broken_sorting_defect [edge]", "status": "passed", "start": 1783821476339, "stop": 1783821477666, "duration": 1327}]};
+const DATA = {"stats": {"passed": 52, "failed": 0, "broken": 0, "skipped": 0}, "severities": {"critical": 26, "normal": 14, "minor": 4, "blocker": 8}, "history": [{"run": 7, "passRate": 100, "total": 21}, {"run": 8, "passRate": 100, "total": 21}, {"run": 9, "passRate": 100, "total": 52}, {"run": 10, "passRate": 100, "total": 52}, {"run": 11, "passRate": 100, "total": 52}, {"run": 12, "passRate": 100, "total": 52}], "tests": [{"name": "test_get_all_posts_returns_200_and_full_list [chrome]", "status": "passed", "start": 1783876017864, "stop": 1783876017907, "duration": 43}, {"name": "test_get_single_post_has_expected_schema [chrome]", "status": "passed", "start": 1783876017909, "stop": 1783876017944, "duration": 35}, {"name": "test_get_nonexistent_post_returns_404 [chrome]", "status": "passed", "start": 1783876017946, "stop": 1783876017987, "duration": 41}, {"name": "test_create_post_returns_201_with_new_id [chrome]", "status": "passed", "start": 1783876017989, "stop": 1783876018038, "duration": 49}, {"name": "test_update_post_returns_200_with_changes [chrome]", "status": "passed", "start": 1783876018040, "stop": 1783876018105, "duration": 65}, {"name": "test_delete_post_returns_200 [chrome]", "status": "passed", "start": 1783876018107, "stop": 1783876018150, "duration": 43}, {"name": "test_response_time_is_acceptable [chrome]", "status": "passed", "start": 1783876018152, "stop": 1783876018186, "duration": 34}, {"name": "test_get_all_posts_returns_200_and_full_list [edge]", "status": "passed", "start": 1783876020672, "stop": 1783876020748, "duration": 76}, {"name": "test_get_single_post_has_expected_schema [edge]", "status": "passed", "start": 1783876020750, "stop": 1783876020783, "duration": 33}, {"name": "test_get_nonexistent_post_returns_404 [edge]", "status": "passed", "start": 1783876020785, "stop": 1783876020899, "duration": 114}, {"name": "test_create_post_returns_201_with_new_id [edge]", "status": "passed", "start": 1783876020901, "stop": 1783876021007, "duration": 106}, {"name": "test_update_post_returns_200_with_changes [edge]", "status": "passed", "start": 1783876021008, "stop": 1783876021121, "duration": 113}, {"name": "test_delete_post_returns_200 [edge]", "status": "passed", "start": 1783876021123, "stop": 1783876021223, "duration": 100}, {"name": "test_response_time_is_acceptable [edge]", "status": "passed", "start": 1783876021225, "stop": 1783876021261, "duration": 36}, {"name": "test_added_products_appear_in_cart [chrome]", "status": "passed", "start": 1783876027393, "stop": 1783876030667, "duration": 3274}, {"name": "test_continue_shopping_returns_to_products [chrome]", "status": "passed", "start": 1783876032087, "stop": 1783876034262, "duration": 2175}, {"name": "test_cart_is_empty_by_default [chrome]", "status": "passed", "start": 1783876035660, "stop": 1783876041794, "duration": 6134}, {"name": "test_added_products_appear_in_cart [edge]", "status": "passed", "start": 1783876038940, "stop": 1783876040717, "duration": 1777}, {"name": "test_continue_shopping_returns_to_products [edge]", "status": "passed", "start": 1783876042429, "stop": 1783876043600, "duration": 1171}, {"name": "test_cart_is_empty_by_default [edge]", "status": "passed", "start": 1783876045257, "stop": 1783876050874, "duration": 5617}, {"name": "test_complete_checkout_end_to_end [chrome]", "status": "passed", "start": 1783876043316, "stop": 1783876050639, "duration": 7323}, {"name": "test_checkout_requires_first_name [chrome]", "status": "passed", "start": 1783876052017, "stop": 1783876057632, "duration": 5615}, {"name": "test_complete_checkout_end_to_end [edge]", "status": "passed", "start": 1783876052548, "stop": 1783876055895, "duration": 3347}, {"name": "test_checkout_requires_first_name [edge]", "status": "passed", "start": 1783876057613, "stop": 1783876060296, "duration": 2683}, {"name": "test_order_total_includes_tax [chrome]", "status": "passed", "start": 1783876059031, "stop": 1783876065227, "duration": 6196}, {"name": "test_order_total_includes_tax [edge]", "status": "passed", "start": 1783876061965, "stop": 1783876064689, "duration": 2724}, {"name": "test_valid_users_can_login[standard_user] [edge]", "status": "passed", "start": 1783876065184, "stop": 1783876066382, "duration": 1198}, {"name": "test_valid_users_can_login[standard_user] [chrome]", "status": "passed", "start": 1783876065591, "stop": 1783876066640, "duration": 1049}, {"name": "test_valid_users_can_login[problem_user] [edge]", "status": "passed", "start": 1783876066833, "stop": 1783876068019, "duration": 1186}, {"name": "test_valid_users_can_login[problem_user] [chrome]", "status": "passed", "start": 1783876067027, "stop": 1783876068075, "duration": 1048}, {"name": "test_valid_users_can_login[performance_glitch_user] [chrome]", "status": "passed", "start": 1783876068432, "stop": 1783876074485, "duration": 6053}, {"name": "test_valid_users_can_login[performance_glitch_user] [edge]", "status": "passed", "start": 1783876068485, "stop": 1783876074707, "duration": 6222}, {"name": "test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [chrome]", "status": "passed", "start": 1783876074838, "stop": 1783876075904, "duration": 1066}, {"name": "test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [edge]", "status": "passed", "start": 1783876075173, "stop": 1783876076385, "duration": 1212}, {"name": "test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [chrome]", "status": "passed", "start": 1783876076254, "stop": 1783876077298, "duration": 1044}, {"name": "test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [edge]", "status": "passed", "start": 1783876076846, "stop": 1783876078058, "duration": 1212}, {"name": "test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [chrome]", "status": "passed", "start": 1783876077664, "stop": 1783876078629, "duration": 965}, {"name": "test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [edge]", "status": "passed", "start": 1783876078518, "stop": 1783876079610, "duration": 1092}, {"name": "test_locked_out_user_is_blocked [chrome]", "status": "passed", "start": 1783876079010, "stop": 1783876080067, "duration": 1057}, {"name": "test_locked_out_user_is_blocked [edge]", "status": "passed", "start": 1783876080069, "stop": 1783876081251, "duration": 1182}, {"name": "test_all_products_are_displayed [chrome]", "status": "passed", "start": 1783876081479, "stop": 1783876081512, "duration": 33}, {"name": "test_all_products_are_displayed [edge]", "status": "passed", "start": 1783876082898, "stop": 1783876082933, "duration": 35}, {"name": "test_sort_products_by_price_low_to_high [chrome]", "status": "passed", "start": 1783876082924, "stop": 1783876083044, "duration": 120}, {"name": "test_sort_products_by_name_z_to_a [chrome]", "status": "passed", "start": 1783876084468, "stop": 1783876084587, "duration": 119}, {"name": "test_sort_products_by_price_low_to_high [edge]", "status": "passed", "start": 1783876084597, "stop": 1783876084732, "duration": 135}, {"name": "test_add_product_updates_cart_badge [chrome]", "status": "passed", "start": 1783876085997, "stop": 1783876087113, "duration": 1116}, {"name": "test_sort_products_by_name_z_to_a [edge]", "status": "passed", "start": 1783876086409, "stop": 1783876086539, "duration": 130}, {"name": "test_add_product_updates_cart_badge [edge]", "status": "passed", "start": 1783876088194, "stop": 1783876088806, "duration": 612}, {"name": "test_remove_product_clears_cart_badge [chrome]", "status": "passed", "start": 1783876088509, "stop": 1783876100203, "duration": 11694}, {"name": "test_remove_product_clears_cart_badge [edge]", "status": "passed", "start": 1783876090460, "stop": 1783876102188, "duration": 11728}, {"name": "test_problem_user_has_broken_sorting_defect [chrome]", "status": "passed", "start": 1783876100579, "stop": 1783876101764, "duration": 1185}, {"name": "test_problem_user_has_broken_sorting_defect [edge]", "status": "passed", "start": 1783876102674, "stop": 1783876103981, "duration": 1307}]};
 
 const css = getComputedStyle(document.documentElement);
 const C = {
@@ -291,40 +302,63 @@ new Chart(document.getElementById('slowChart'), {
   }
 });
 
-// ── Execution waterfall ──
+// ── Execution waterfalls (one per browser) ──
 const runnable = DATA.tests.filter(t => t.start && t.stop).sort((a, b) => a.start - b.start);
-const t0 = runnable.length ? runnable[0].start : 0;
 const statusColor = t => t.status === 'passed' ? C.pass : (t.status === 'skipped' ? C.skip : C.fail);
-new Chart(document.getElementById('waterfallChart'), {
-  type: 'bar',
-  data: {
-    labels: runnable.map(t => t.name.replace(/^test_/, '').replaceAll('_', ' ')),
-    datasets: [{
-      data: runnable.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
-      backgroundColor: runnable.map(t => statusColor(t) + 'D9'),
-      borderColor: runnable.map(statusColor),
-      borderWidth: 1, borderRadius: 4, barThickness: 9, borderSkipped: false,
-    }]
-  },
-  options: {
-    indexAxis: 'y', maintainAspectRatio: false,
-    scales: {
-      x: { position: 'top', title: { display: true, text: 'seconds since run start', color: C.muted }, grid: { color: C.faint } },
-      y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11.5 } } }
+const browserOf = name => { const m = name.match(/\[(\w+)\]\s*$/); return m ? m[1] : null; };
+
+const groups = {};
+runnable.forEach(t => {
+  const b = browserOf(t.name) || 'all tests';
+  (groups[b] = groups[b] || []).push(t);
+});
+const groupNames = Object.keys(groups).sort();
+
+function renderWaterfall(canvasId, tests, browser) {
+  const t0 = tests[0].start;
+  new Chart(document.getElementById(canvasId), {
+    type: 'bar',
+    data: {
+      labels: tests.map(t => t.name.replace(/\s*\[\w+\]\s*$/, '').replace(/^test_/, '').replaceAll('_', ' ')),
+      datasets: [{
+        data: tests.map(t => [(t.start - t0) / 1000, Math.max((t.stop - t0) / 1000, (t.start - t0) / 1000 + 0.3)]),
+        backgroundColor: tests.map(t => statusColor(t) + 'D9'),
+        borderColor: tests.map(statusColor),
+        borderWidth: 1, borderRadius: 4, barThickness: 11, borderSkipped: false,
+      }]
     },
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: ctx => {
-            const t = runnable[ctx.dataIndex];
-            return ` ${t.status} · ${((t.stop - t.start) / 1000).toFixed(1)}s (${((t.start - t0) / 1000).toFixed(1)}s → ${((t.stop - t0) / 1000).toFixed(1)}s)`;
+    options: {
+      indexAxis: 'y', maintainAspectRatio: false,
+      scales: {
+        x: { position: 'top', title: { display: true, text: 'seconds since run start', color: C.muted }, grid: { color: C.faint } },
+        y: { grid: { display: false }, ticks: { autoSkip: false, font: { size: 11.5 } } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => {
+              const t = tests[ctx.dataIndex];
+              return ` ${t.status} · ${((t.stop - t.start) / 1000).toFixed(1)}s (${((t.start - t0) / 1000).toFixed(1)}s → ${((t.stop - t0) / 1000).toFixed(1)}s)`;
+            }
           }
         }
       }
     }
-  }
-});
+  });
+}
+
+if (groupNames.length) {
+  const label1 = groupNames[0] === 'all tests' ? '' : ' - ' + groupNames[0].charAt(0).toUpperCase() + groupNames[0].slice(1);
+  document.getElementById('wfTitle1').textContent = 'Execution waterfall' + label1;
+  renderWaterfall('waterfall1', groups[groupNames[0]], groupNames[0]);
+}
+if (groupNames.length > 1) {
+  const label2 = ' - ' + groupNames[1].charAt(0).toUpperCase() + groupNames[1].slice(1);
+  document.getElementById('wfPanel2').style.display = '';
+  document.getElementById('wfTitle2').textContent = 'Execution waterfall' + label2;
+  renderWaterfall('waterfall2', groups[groupNames[1]], groupNames[1]);
+}
 </script>
 </body>
 </html>

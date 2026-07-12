@@ -1,1 +1,1 @@
-{"reportName":"PyQA Suite - Test Report","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":52,"unknown":0,"total":52},"time":{"start":1783821382676,"stop":1783821477666,"duration":94990,"minDuration":30,"maxDuration":12738,"sumDuration":103656}}
+{"reportName":"PyQA Suite - Test Report","testRuns":[],"statistic":{"failed":0,"broken":0,"skipped":0,"passed":52,"unknown":0,"total":52},"time":{"start":1783876017864,"stop":1783876103981,"duration":86117,"minDuration":33,"maxDuration":11728,"sumDuration":102724}}
