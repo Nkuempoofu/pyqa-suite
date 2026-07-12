@@ -113,8 +113,8 @@ SHARED_CSS = """
   .nav-links a:hover { color: var(--accent-l); }
   .nav-links a.active { color: var(--accent-l); }
   .kicker {
-    font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.28em;
-    color: var(--accent-l); text-transform: uppercase; margin-bottom: 16px;
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.24em;
+    color: var(--accent-l); text-transform: uppercase; margin-bottom: 12px;
     display: flex; align-items: center; gap: 12px;
   }
   .kicker::before { content: ''; width: 34px; height: 1px; background: var(--accent); }
@@ -212,13 +212,13 @@ def build_index(report_dir, output_dir):
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 {SHARED_CSS}
-  header {{ padding: 72px 0 0; }}
-  h1 {{ font-size: clamp(38px, 5.5vw, 62px); font-weight: 800; letter-spacing: -0.025em; line-height: 1.06; }}
+  header {{ padding: 60px 0 0; }}
+  h1 {{ font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.12; }}
   h1 .grad {{
     background: linear-gradient(90deg, var(--accent), var(--accent-l), var(--violet));
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }}
-  .sub {{ color: var(--muted); margin-top: 18px; max-width: 680px; font-size: 17px; }}
+  .sub {{ color: var(--muted); margin-top: 14px; max-width: 640px; font-size: 15px; }}
   .sub a {{ color: var(--accent-l); text-decoration: none; border-bottom: 1px solid rgba(34,211,238,0.3); }}
   .chips {{ display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }}
   .chip {{
