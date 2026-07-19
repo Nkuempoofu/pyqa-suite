@@ -6,7 +6,7 @@
 <title>PyQA Suite | Live Test Automation Dashboard | Nkululeko Mpofu</title>
 <meta name="description" content="Live CI test results for PyQA Suite - a Python + Selenium WebDriver automation framework by Nkululeko Mpofu, QA Engineer. Updated automatically on every push.">
 <meta property="og:title" content="PyQA Suite | Live Test Automation Dashboard">
-<meta property="og:description" content="52 automated tests, 100% passing. Python, Selenium WebDriver, pytest, Allure, GitHub Actions.">
+<meta property="og:description" content="52 automated tests, 94% passing. Python, Selenium WebDriver, pytest, Allure, GitHub Actions.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>&#129514;</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -103,11 +103,11 @@
   .card .value { font-size: 52px; font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
   .card .hint { color: var(--faint); font-size: 13px; }
   .value.pass { color: var(--pass); }
-  .value.fail { color: var(--text); }
+  .value.fail { color: var(--fail); }
   .ring-card { align-items: flex-start; gap: 16px; }
   .ring {
     width: 118px; height: 118px; border-radius: 50%;
-    background: conic-gradient(var(--pass) 360deg, var(--faint) 360deg);
+    background: conic-gradient(var(--pass) 338deg, var(--faint) 338deg);
     display: flex; align-items: center; justify-content: center;
   }
   .ring-inner {
@@ -198,20 +198,20 @@
       <span class="chip">Allure</span><span class="chip">GitHub Actions</span>
     </div>
     <div class="status-row">
-      <span class="status ok"><span class="dot"></span>ALL 52 TESTS PASSING</span>
-      <a class="run-chip" href="https://github.com/Nkuempoofu/pyqa-suite/actions/runs/29625796797" target="_blank" rel="noopener">Run #20 &middot; view build &#8599;</a>
-      <span class="run-chip" style="pointer-events:none;">Duration &middot; 1m 30s</span>
+      <span class="status bad"><span class="dot"></span>3 OF 52 TESTS FAILING</span>
+      <a class="run-chip" href="https://github.com/Nkuempoofu/pyqa-suite/actions/runs/29669301954" target="_blank" rel="noopener">Run #21 &middot; view build &#8599;</a>
+      <span class="run-chip" style="pointer-events:none;">Duration &middot; 6m 55s</span>
     </div>
   </header>
 
   <div class="grid">
     <div class="card ring-card">
       <div class="label">Pass rate</div>
-      <div class="ring"><div class="ring-inner">100%</div></div>
+      <div class="ring"><div class="ring-inner">94%</div></div>
     </div>
     <div class="card"><div class="label">Test cases</div><div class="value">52</div><div class="hint">UI + API, executed this run</div></div>
-    <div class="card"><div class="label">Passed</div><div class="value pass">52</div><div class="hint">verified this run</div></div>
-    <div class="card"><div class="label">Failures</div><div class="value fail">0</div><div class="hint">including broken</div></div>
+    <div class="card"><div class="label">Passed</div><div class="value pass">49</div><div class="hint">verified this run</div></div>
+    <div class="card"><div class="label">Failures</div><div class="value fail">3</div><div class="hint">including broken</div></div>
   </div>
 
   <div class="section">
@@ -237,8 +237,14 @@
         <div class="feat-row">
           <div class="feat-icon">&#128722;</div>
           <div class="feat-name">Product Catalogue</div>
-          <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
-          <div class="feat-count">4/4</div>
+          <div class="feat-bar"><div class="feat-fill" style="width:75%"></div></div>
+          <div class="feat-count">3/4</div>
+        </div>
+        <div class="feat-row">
+          <div class="feat-icon">&#128273;</div>
+          <div class="feat-name">Authentication</div>
+          <div class="feat-bar"><div class="feat-fill" style="width:67%"></div></div>
+          <div class="feat-count">2/3</div>
         </div>
         <div class="feat-row">
           <div class="feat-icon">&#128179;</div>
@@ -247,16 +253,10 @@
           <div class="feat-count">3/3</div>
         </div>
         <div class="feat-row">
-          <div class="feat-icon">&#128273;</div>
-          <div class="feat-name">Authentication</div>
-          <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
-          <div class="feat-count">3/3</div>
-        </div>
-        <div class="feat-row">
           <div class="feat-icon">&#128717;</div>
           <div class="feat-name">Shopping Cart</div>
-          <div class="feat-bar"><div class="feat-fill full" style="width:100%"></div></div>
-          <div class="feat-count">2/2</div>
+          <div class="feat-bar"><div class="feat-fill" style="width:50%"></div></div>
+          <div class="feat-count">1/2</div>
         </div>
     </div>
   </div>
@@ -292,7 +292,7 @@
 
   <footer>
     <span>&copy; 2026 Nkululeko Mpofu &middot; QA Engineer</span>
-    <span>Generated 18 Jul 2026 &middot; 01:47 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
+    <span>Generated 19 Jul 2026 &middot; 02:01 UTC &middot; <a href="https://nkululeko-portfolio.vercel.app">nkululeko-portfolio.vercel.app</a></span>
   </footer>
 </div>
 </body>
