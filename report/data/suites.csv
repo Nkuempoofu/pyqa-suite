@@ -1,81 +1,81 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"A locked-out user cannot log in even with correct credentials.","1060","test_locked_out_user_is_blocked [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
+"POST /posts creates a resource and echoes it back with an ID.","43","test_create_post_returns_201_with_new_id [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"Continue shopping navigates back to the inventory page.","1141","test_continue_shopping_returns_to_products [edge]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
+"GET on an ID that does not exist returns 404, not a server error.","38","test_get_nonexistent_post_returns_404 [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"The order summary shows a total greater than the item price alone.","2605","test_order_total_includes_tax [edge]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
+"Sorting low-to-high puts prices in ascending order.","117","test_sort_products_by_price_low_to_high [edge]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Adding a product shows 1 on the cart badge.","594","test_add_product_updates_cart_badge [edge]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Submitting customer info without a first name shows an error.","2541","test_checkout_requires_first_name [edge]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
+"Wrong password, unknown user, and missing username each show
+        the correct error message and block entry.","1117","test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Every valid user type lands on the inventory page - including the
+        intentionally slow performance_glitch_user, which exercises the
+        framework's explicit waits.","6135","test_valid_users_can_login[performance_glitch_user] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Every valid user type lands on the inventory page - including the
+        intentionally slow performance_glitch_user, which exercises the
+        framework's explicit waits.","1094","test_valid_users_can_login[standard_user] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Wrong password, unknown user, and missing username each show
+        the correct error message and block entry.","1131","test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Adding a product shows 1 on the cart badge.","1093","test_add_product_updates_cart_badge [chrome]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Removing the only product clears the cart badge.","12656","test_remove_product_clears_cart_badge [chrome]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"A locked-out user cannot log in even with correct credentials.","1123","test_locked_out_user_is_blocked [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"POST /posts creates a resource and echoes it back with an ID.","48","test_create_post_returns_201_with_new_id [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"GET /posts returns 200 with the complete list of 100 posts.","72","test_get_all_posts_returns_200_and_full_list [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"PUT /posts/1 updates the resource and returns the new values.","50","test_update_post_returns_200_with_changes [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"A fresh session has no items in the cart.","5581","test_cart_is_empty_by_default [edge]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
 "DEFECT (documented): sorting Z-A does nothing for problem_user.
 
         Expected for a healthy user: names in reverse alphabetical order.
         Actual for problem_user: order unchanged. This test asserts the
         defect is still present, demonstrating defect isolation per user type.
-        ","1082","test_problem_user_has_broken_sorting_defect [chrome]","tests","2026-09-19","passed","2026-09-19","TestKnownDefects","test_products","",""
+        ","1199","test_problem_user_has_broken_sorting_defect [edge]","tests","2026-09-20","passed","2026-09-20","TestKnownDefects","test_products","",""
+"Sorting Z-to-A puts product names in reverse alphabetical order.","114","test_sort_products_by_name_z_to_a [edge]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Sorting low-to-high puts prices in ascending order.","96","test_sort_products_by_price_low_to_high [chrome]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Removing the only product clears the cart badge.","11698","test_remove_product_clears_cart_badge [edge]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"A user can add a product, check out, and see the order confirmation.","3186","test_complete_checkout_end_to_end [edge]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
 "Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","1230","test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
+        the correct error message and block entry.","1050","test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"GET on an ID that does not exist returns 404, not a server error.","34","test_get_nonexistent_post_returns_404 [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"DELETE /posts/1 completes without error.","44","test_delete_post_returns_200 [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
 "Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","1979","test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"GET /posts returns 200 with the complete list of 100 posts.","42","test_get_all_posts_returns_200_and_full_list [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Products added on the inventory page show up in the cart.","3167","test_added_products_appear_in_cart [chrome]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
-"Submitting customer info without a first name shows an error.","2474","test_checkout_requires_first_name [edge]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
-"Sorting low-to-high puts prices in ascending order.","75","test_sort_products_by_price_low_to_high [chrome]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
+        the correct error message and block entry.","1068","test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
 "Every valid user type lands on the inventory page - including the
         intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","6039","test_valid_users_can_login[performance_glitch_user] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"A user can add a product, check out, and see the order confirmation.","7296","test_complete_checkout_end_to_end [chrome]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
-"PUT /posts/1 updates the resource and returns the new values.","233","test_update_post_returns_200_with_changes [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Removing the only product clears the cart badge.","12633","test_remove_product_clears_cart_badge [chrome]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"GET /posts/1 returns a post with all required fields.","53","test_get_single_post_has_expected_schema [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"GET /posts/1 returns a post with all required fields.","33","test_get_single_post_has_expected_schema [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"The order summary shows a total greater than the item price alone.","5943","test_order_total_includes_tax [chrome]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
+        framework's explicit waits.","1125","test_valid_users_can_login[standard_user] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"The order summary shows a total greater than the item price alone.","6054","test_order_total_includes_tax [chrome]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
+"GET /posts/1 returns a post with all required fields.","39","test_get_single_post_has_expected_schema [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"GET /posts returns 200 with the complete list of 100 posts.","58","test_get_all_posts_returns_200_and_full_list [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
 "Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","1092","test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"A fresh session has no items in the cart.","6082","test_cart_is_empty_by_default [chrome]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
-"POST /posts creates a resource and echoes it back with an ID.","218","test_create_post_returns_201_with_new_id [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Continue shopping navigates back to the inventory page.","2116","test_continue_shopping_returns_to_products [chrome]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
-"Products added on the inventory page show up in the cart.","1697","test_added_products_appear_in_cart [edge]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
+        the correct error message and block entry.","1141","test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"PUT /posts/1 updates the resource and returns the new values.","60","test_update_post_returns_200_with_changes [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"A user can add a product, check out, and see the order confirmation.","7186","test_complete_checkout_end_to_end [chrome]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
 "Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","981","test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
+        the correct error message and block entry.","1136","test_invalid_credentials_are_rejected[standard_user-wrong_password-Username and password do not match] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"The inventory page shows all 6 products.","29","test_all_products_are_displayed [edge]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"Products added on the inventory page show up in the cart.","3220","test_added_products_appear_in_cart [chrome]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
+"The inventory page shows all 6 products.","24","test_all_products_are_displayed [chrome]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
+"A locked-out user cannot log in even with correct credentials.","1149","test_locked_out_user_is_blocked [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Sorting Z-to-A puts product names in reverse alphabetical order.","95","test_sort_products_by_name_z_to_a [chrome]","tests","2026-09-20","passed","2026-09-20","TestProducts","test_products","",""
 "Every valid user type lands on the inventory page - including the
         intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","6048","test_valid_users_can_login[performance_glitch_user] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"Continue shopping navigates back to the inventory page.","1128","test_continue_shopping_returns_to_products [edge]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
-"The inventory page shows all 6 products.","20","test_all_products_are_displayed [chrome]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"Sorting low-to-high puts prices in ascending order.","100","test_sort_products_by_price_low_to_high [edge]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"A locked-out user cannot log in even with correct credentials.","1049","test_locked_out_user_is_blocked [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"The inventory page shows all 6 products.","25","test_all_products_are_displayed [edge]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"GET /posts returns 200 with the complete list of 100 posts.","163","test_get_all_posts_returns_200_and_full_list [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Sorting Z-to-A puts product names in reverse alphabetical order.","101","test_sort_products_by_name_z_to_a [edge]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"POST /posts creates a resource and echoes it back with an ID.","121","test_create_post_returns_201_with_new_id [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Removing the only product clears the cart badge.","11665","test_remove_product_clears_cart_badge [edge]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"Sorting Z-to-A puts product names in reverse alphabetical order.","76","test_sort_products_by_name_z_to_a [chrome]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"GET /posts responds within 3 seconds.","43","test_response_time_is_acceptable [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"GET /posts responds within 3 seconds.","47","test_response_time_is_acceptable [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Adding a product shows 1 on the cart badge.","1072","test_add_product_updates_cart_badge [chrome]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"DELETE /posts/1 completes without error.","117","test_delete_post_returns_200 [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Adding a product shows 1 on the cart badge.","586","test_add_product_updates_cart_badge [edge]","tests","2026-09-19","passed","2026-09-19","TestProducts","test_products","",""
-"Submitting customer info without a first name shows an error.","5379","test_checkout_requires_first_name [chrome]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
-"A user can add a product, check out, and see the order confirmation.","3081","test_complete_checkout_end_to_end [edge]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
-"GET on an ID that does not exist returns 404, not a server error.","41","test_get_nonexistent_post_returns_404 [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"PUT /posts/1 updates the resource and returns the new values.","129","test_update_post_returns_200_with_changes [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
+        framework's explicit waits.","1119","test_valid_users_can_login[problem_user] [edge]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"GET /posts responds within 3 seconds.","40","test_response_time_is_acceptable [edge]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"GET /posts/1 returns a post with all required fields.","33","test_get_single_post_has_expected_schema [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"Continue shopping navigates back to the inventory page.","2140","test_continue_shopping_returns_to_products [chrome]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
+"GET /posts responds within 3 seconds.","39","test_response_time_is_acceptable [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
+"Every valid user type lands on the inventory page - including the
+        intentionally slow performance_glitch_user, which exercises the
+        framework's explicit waits.","6103","test_valid_users_can_login[performance_glitch_user] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Products added on the inventory page show up in the cart.","1719","test_added_products_appear_in_cart [edge]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
 "DEFECT (documented): sorting Z-A does nothing for problem_user.
 
         Expected for a healthy user: names in reverse alphabetical order.
         Actual for problem_user: order unchanged. This test asserts the
         defect is still present, demonstrating defect isolation per user type.
-        ","1138","test_problem_user_has_broken_sorting_defect [edge]","tests","2026-09-19","passed","2026-09-19","TestKnownDefects","test_products","",""
-"Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","999","test_invalid_credentials_are_rejected[-secret_sauce-Username is required] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"A fresh session has no items in the cart.","5598","test_cart_is_empty_by_default [edge]","tests","2026-09-19","passed","2026-09-19","TestCart","test_cart","",""
+        ","1213","test_problem_user_has_broken_sorting_defect [chrome]","tests","2026-09-20","passed","2026-09-20","TestKnownDefects","test_products","",""
+"A fresh session has no items in the cart.","6094","test_cart_is_empty_by_default [chrome]","tests","2026-09-20","passed","2026-09-20","TestCart","test_cart","",""
 "Every valid user type lands on the inventory page - including the
         intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","1046","test_valid_users_can_login[standard_user] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"Wrong password, unknown user, and missing username each show
-        the correct error message and block entry.","1054","test_invalid_credentials_are_rejected[unknown_user-secret_sauce-Username and password do not match] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"Every valid user type lands on the inventory page - including the
-        intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","1025","test_valid_users_can_login[problem_user] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"Every valid user type lands on the inventory page - including the
-        intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","1018","test_valid_users_can_login[problem_user] [chrome]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"GET on an ID that does not exist returns 404, not a server error.","40","test_get_nonexistent_post_returns_404 [edge]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"DELETE /posts/1 completes without error.","102","test_delete_post_returns_200 [chrome]","tests","2026-09-19","passed","2026-09-19","TestApi","test_api","",""
-"Every valid user type lands on the inventory page - including the
-        intentionally slow performance_glitch_user, which exercises the
-        framework's explicit waits.","1022","test_valid_users_can_login[standard_user] [edge]","tests","2026-09-19","passed","2026-09-19","TestLogin","test_login","",""
-"The order summary shows a total greater than the item price alone.","2505","test_order_total_includes_tax [edge]","tests","2026-09-19","passed","2026-09-19","TestCheckout","test_checkout","",""
+        framework's explicit waits.","1155","test_valid_users_can_login[problem_user] [chrome]","tests","2026-09-20","passed","2026-09-20","TestLogin","test_login","",""
+"Submitting customer info without a first name shows an error.","5483","test_checkout_requires_first_name [chrome]","tests","2026-09-20","passed","2026-09-20","TestCheckout","test_checkout","",""
+"DELETE /posts/1 completes without error.","48","test_delete_post_returns_200 [chrome]","tests","2026-09-20","passed","2026-09-20","TestApi","test_api","",""
