@@ -1,1 +1,1 @@
-{"name":"PyQA Suite - Test Report","stats":{"failed":0,"broken":0,"skipped":0,"passed":52,"unknown":0,"total":52},"status":"passed","duration":85829,"createdAt":1795759209529,"plugin":"Allure2","meta":{"reportId":"50de43f1-c567-4423-be5f-905ed41e4d71","singleFile":false}}
+{"name":"PyQA Suite - Test Report","stats":{"failed":0,"broken":0,"skipped":0,"passed":52,"unknown":0,"total":52},"status":"passed","duration":82355,"createdAt":1795844507259,"plugin":"Allure2","meta":{"reportId":"f658b20b-7b3c-4434-b940-f6f4a2a9191b","singleFile":false}}
